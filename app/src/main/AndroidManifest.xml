@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+      Pinot Rouge runs as the phone's default SMS handler. That role is what
+      lets it see a message before anything else does, which is what makes
+      filtering possible at all.
+
+      SEND_SMS / READ_SMS / RECEIVE_SMS are restricted permissions: Google Play
+      only grants them to apps that are actually the default handler. That is a
+      deliberate consequence of the product, not an oversight.
+    -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- SMS/MMS require telephony; do not silently install on devices without a radio. -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="true" />
+
+    <!-- Incoming MMS. WAP_PUSH_DELIVER is also one of the four ROLE_SMS components. -->
+    <uses-permission android:name="android.permission.RECEIVE_MMS" />
+    <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH" />
+
+    <!--
+      Cloud Auto Backup is off on purpose. Room holds full held-message
+      bodies; "Message text never leaves this phone" cannot be true if
+      Google Backup can upload pinot_rouge.db. Do not flip allowBackup
+      back to true.
+
+      allowBackup=false does not disable device-to-device transfer on
+      API 31+. dataExtractionRules is a real D2D exclusion policy (not
+      the Android Studio template) so held bodies cannot leave that way
+      either. Do not restore backup_rules.xml. See docs/PRIVACY.md.
+    -->
+    <application
+        android:name=".PinotRougeApp"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.PinotRouge"
+        android:usesCleartextTraffic="false">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.PinotRouge"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Notification deep link: pinotrouge://thread/{threadId} -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="pinotrouge"
+                    android:host="thread"
+                    android:pathPrefix="/" />
+            </intent-filter>
+        </activity>
+
+        <!--
+          ══════════════════════════════════════════════════════════════════
+          The four components required for ROLE_SMS.
+
+          Android will not offer this app in the "Default SMS app" picker
+          unless ALL FOUR are declared, with these exact actions and
+          permissions. Remove or misconfigure any one of them and the app
+          simply stops appearing in the list — with no error, no log line,
+          and nothing to explain why. Change nothing here casually.
+
+          Reference: android.provider.Telephony class documentation.
+          ══════════════════════════════════════════════════════════════════
+        -->
+
+        <!-- 1. Incoming SMS. Delivered only to the default handler. -->
+        <receiver
+            android:name=".sms.SmsDeliverReceiver"
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 2. Incoming MMS. ROLE_SMS required — do not remove. -->
+        <receiver
+            android:name=".sms.WapPushDeliverReceiver"
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_WAP_PUSH">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
+
+                <data android:mimeType="application/vnd.wap.mms-message" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Completes SmsManager.downloadMultimediaMessage (not a ROLE_SMS component). -->
+        <receiver
+            android:name=".sms.MmsDownloadReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.pinotrouge.messaging.action.MMS_DOWNLOADED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Completes SmsManager.sendMultimediaMessage (not a ROLE_SMS component). -->
+        <receiver
+            android:name=".sms.MmsSendReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.pinotrouge.messaging.action.MMS_SENT" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Completes SmsManager.sendTextMessage sent-result (not a ROLE_SMS component). -->
+        <receiver
+            android:name=".sms.SmsSentReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.pinotrouge.messaging.action.SMS_SENT" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 3. Another app asking us to text someone. -->
+        <activity
+            android:name=".sms.SendToActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.SENDTO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+        </activity>
+
+        <!-- 4. Quick reply to a declined call. -->
+        <service
+            android:name=".sms.RespondViaMessageService"
+            android:exported="true"
+            android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE">
+            <intent-filter>
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+        </service>
+
+        <!--
+          WorkManager: remove the default initializer so we use HiltWorkerFactory
+          via PinotRougeApp (Configuration.Provider). A partial Hilt+Work setup
+          crashes at runtime on first enqueue.
+        -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+
+        <!-- Send/download cache only. Do not add held_media/ to file_paths.xml. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
+
+</manifest>

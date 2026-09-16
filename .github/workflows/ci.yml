@@ -1,0 +1,72 @@
+name: CI
+
+# Merge gate for every branch heading into main.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# Least privilege: this workflow has no repository secrets and must not
+# gain write access. Do not switch to pull_request_target.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4.4.3
+
+      - name: Filter engine tests
+        run: ./gradlew :core:rules:test
+
+      - name: App unit tests
+        run: ./gradlew :app:testDebugUnitTest
+
+      - name: Compile androidTest sources
+        run: ./gradlew :app:compileDebugAndroidTestKotlin
+
+      - name: Assemble debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Android Lint
+        run: ./gradlew :app:lintDebug
+
+      - name: Assert the filter engine stays Android-free
+        run: |
+          if grep -rn --include='*.kt' -E '^\s*import\s+(android|androidx)\.' core/rules/src; then
+            echo "::error::core/rules must not depend on Android. Pass the value in instead."
+            exit 1
+          fi
+          echo "core/rules is clean."
+
+      - name: Upload lint and test reports
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: reports
+          path: |
+            core/rules/build/reports/tests/
+            app/build/reports/tests/
+            app/build/reports/lint-results-debug.html
+            app/build/reports/lint-results-debug.xml
+          retention-days: 7
+          if-no-files-found: ignore

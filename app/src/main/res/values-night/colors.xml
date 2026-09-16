@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Launch / window only (system night). Compose screens use Pinot tokens in ui/theme. -->
+    <color name="pinot_bg">#17141c</color>
+    <color name="pinot_accent">#d4798c</color>
+    <color name="pinot_text">#efeaee</color>
+</resources>

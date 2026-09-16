@@ -1,0 +1,34 @@
+*.iml
+.gradle
+/local.properties
+.idea/
+.DS_Store
+build/
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Secrets and signing — never commit.
+*.jks
+*.keystore
+*.p12
+*.pem
+.env
+.env.*
+
+# Packages and device artefacts.
+*.apk
+*.aab
+*.ap_
+*.dex
+*.db
+*.sqlite
+
+# Private materials that must not re-enter this public tree.
+PinotRougeVault/
+.cursor/
+.claude/
+AGENTS.md.bak
+*.log
+.tmp-shots/

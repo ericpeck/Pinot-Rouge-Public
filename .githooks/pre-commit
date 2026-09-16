@@ -1,0 +1,47 @@
+#!/bin/sh
+#
+# Guardrails that are cheap to check and expensive to miss.
+#
+# Enable once per clone:
+#     git config core.hooksPath .githooks
+#
+# Emergency bypass (say so in the PR if you use it):
+#     git commit --no-verify
+
+set -e
+
+added=$(git diff --cached --name-only --diff-filter=A)
+[ -z "$added" ] && exit 0
+
+fail() {
+    echo
+    echo "──────────────────────────────────────────────────────────────"
+    echo "  Commit blocked: $1"
+    echo
+    echo "  $2"
+    echo "──────────────────────────────────────────────────────────────"
+    exit 1
+}
+
+keys=$(echo "$added" | grep -iE '\.(jks|keystore|p12|pem|key)$|(^|/)(keystore|upload-key)' || true)
+if [ -n "$keys" ]; then
+    fail "this looks like key material." \
+"$keys
+
+  No keystore, key, password or alias ever enters this repo."
+fi
+
+envfiles=$(echo "$added" | grep -E '(^|/)\.env($|\.)|local\.properties$' || true)
+if [ -n "$envfiles" ]; then
+    fail "this looks like a local secrets file." "$envfiles"
+fi
+
+vault=$(echo "$added" | grep -E '(^|/)PinotRougeVault/' || true)
+if [ -n "$vault" ]; then
+    fail "private vault paths are not part of this public repository." "$vault"
+fi
+
+echo "pre-commit: newly tracked in this commit —"
+echo "$added" | sed 's/^/    + /'
+
+exit 0

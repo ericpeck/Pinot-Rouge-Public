@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Send PDU and download targets only. held_media/ must never appear here. -->
+    <cache-path name="mms_send" path="mms_send/" />
+    <cache-path name="mms_download" path="mms_download/" />
+</paths>

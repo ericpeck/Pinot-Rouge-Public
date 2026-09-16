@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Pinot Rouge seal. Art stays inside the 66dp safe circle. -->
+    <path
+        android:fillColor="#f6d9d6"
+        android:fillType="evenOdd"
+        android:pathData="M25 54A29 29 0 1 1 83 54A29 29 0 1 1 25 54ZM45 37H63A7 7 0 0 1 70 44V56A7 7 0 0 1 63 63H53.5C52.5 67.5 49 72 44.5 74.5C46.5 70.5 47.5 66.5 47.5 63H45A7 7 0 0 1 38 56V44A7 7 0 0 1 45 37ZM45.5 45A2.6 2.6 0 1 1 50.7 45A2.6 2.6 0 1 1 45.5 45ZM51.4 45A2.6 2.6 0 1 1 56.6 45A2.6 2.6 0 1 1 51.4 45ZM57.3 45A2.6 2.6 0 1 1 62.5 45A2.6 2.6 0 1 1 57.3 45ZM48.45 50.4A2.6 2.6 0 1 1 53.65 50.4A2.6 2.6 0 1 1 48.45 50.4ZM54.35 50.4A2.6 2.6 0 1 1 59.55 50.4A2.6 2.6 0 1 1 54.35 50.4ZM51.4 55.8A2.6 2.6 0 1 1 56.6 55.8A2.6 2.6 0 1 1 51.4 55.8Z" />
+</vector>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Device-to-device transfer on API 31+. allowBackup=false already disables
+  cloud Auto Backup; without this file, D2D is fully enabled for all app
+  content on some manufacturers (Android 12+ backup changes).
+
+  There is no <cloud-backup> section on purpose — do not add one that would
+  re-enable cloud backup. If allowBackup is ever set true, add a matching
+  <cloud-backup> block with these same excludes, plus fullBackupContent for
+  API ≤ 30. WAL and SHM are not optional: Room runs in WAL mode.
+-->
+<data-extraction-rules>
+    <device-transfer>
+        <exclude domain="database" path="pinot_rouge.db" />
+        <exclude domain="database" path="pinot_rouge.db-wal" />
+        <exclude domain="database" path="pinot_rouge.db-shm" />
+        <exclude domain="file" path="datastore/" />
+        <exclude domain="file" path="held_media/" />
+    </device-transfer>
+</data-extraction-rules>

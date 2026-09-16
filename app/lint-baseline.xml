@@ -1,0 +1,1133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 9.3.2" type="baseline" client="gradle" dependencies="false" name="AGP (9.3.2)" variant="all" version="9.3.2">
+
+    <issue
+        id="ResourceType"
+        message="Expected resource of type string"
+        errorLine1="                    text = stringResource(tag.toStringRes()),"
+        errorLine2="                                          ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/search/SearchScreen.kt"
+            line="416"
+            column="43"/>
+    </issue>
+
+    <issue
+        id="OldTargetApi"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the `android.os.Build.VERSION_CODES` javadoc for details."
+        errorLine1="        targetSdk = 36   // unchanged"
+        errorLine2="        ~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="45"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="NonObservableLocale"
+        message="Reading locale in a non-observable way in a composable function"
+        errorLine1="            text = kicker.uppercase(Locale.getDefault()),"
+        errorLine2="                                    ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/builder/BuilderScreen.kt"
+            line="373"
+            column="37"/>
+    </issue>
+
+    <issue
+        id="NonObservableLocale"
+        message="Reading locale in a non-observable way in a composable function"
+        errorLine1="            text = stringResource(R.string.builder_plain_kicker).uppercase(Locale.getDefault()),"
+        errorLine2="                                                                           ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/builder/BuilderScreen.kt"
+            line="783"
+            column="76"/>
+    </issue>
+
+    <issue
+        id="NonObservableLocale"
+        message="Reading locale in a non-observable way in a composable function"
+        errorLine1="            text = label.uppercase(Locale.getDefault()),"
+        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/filtered/FilteredScreen.kt"
+            line="350"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="NonObservableLocale"
+        message="Reading locale in a non-observable way in a composable function"
+        errorLine1="                text = kicker.uppercase(Locale.getDefault()),"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/components/PinotCard.kt"
+            line="56"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RedundantLabel"
+        message="Redundant label can be removed"
+        errorLine1="            android:label=&quot;@string/app_name&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="54"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="RedundantLabel"
+        message="Redundant label can be removed"
+        errorLine1="            android:label=&quot;@string/app_name&quot;>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="144"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of Gradle than 9.5.0 is available: 9.7.1"
+        errorLine1="distributionUrl=https\://services.gradle.org/distributions/gradle-9.5.0-bin.zip"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/wrapper/gradle-wrapper.properties"
+            line="5"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 9.3.2 is available: 9.4.0"
+        errorLine1="agp = &quot;9.3.2&quot;"
+        errorLine2="      ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/libs.versions.toml"
+            line="2"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose:compose-bom than 2026.02.01 is available: 2026.09.00"
+        errorLine1="composeBom = &quot;2026.02.01&quot;"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/libs.versions.toml"
+            line="10"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-compiler than 2.8.4 is available: 2.8.5"
+        errorLine1="room = &quot;2.8.4&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/libs.versions.toml"
+            line="14"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-ktx than 2.8.4 is available: 2.8.5"
+        errorLine1="room = &quot;2.8.4&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/libs.versions.toml"
+            line="14"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-runtime than 2.8.4 is available: 2.8.5"
+        errorLine1="room = &quot;2.8.4&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/libs.versions.toml"
+            line="14"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-testing than 2.8.4 is available: 2.8.5"
+        errorLine1="room = &quot;2.8.4&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/libs.versions.toml"
+            line="14"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.hilt:hilt-compiler than 1.3.0 is available: 1.4.0"
+        errorLine1="hiltWork = &quot;1.3.0&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/libs.versions.toml"
+            line="17"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.hilt:hilt-work than 1.3.0 is available: 1.4.0"
+        errorLine1="hiltWork = &quot;1.3.0&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/libs.versions.toml"
+            line="17"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-compose than 2.9.8 is available: 2.10.1"
+        errorLine1="navigationCompose = &quot;2.9.8&quot;"
+        errorLine2="                    ~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/libs.versions.toml"
+            line="19"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlin.jvm than 2.2.10 is available: 2.4.20"
+        errorLine1="kotlin = &quot;2.2.10&quot;"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/libs.versions.toml"
+            line="9"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlin.plugin.compose than 2.2.10 is available: 2.4.20"
+        errorLine1="kotlin = &quot;2.2.10&quot;"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/libs.versions.toml"
+            line="9"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of io.mockk:mockk-android than 1.14.2 is available: 1.14.11"
+        errorLine1="mockk-android = { group = &quot;io.mockk&quot;, name = &quot;mockk-android&quot;, version = &quot;1.14.2&quot; }"
+        errorLine2="                                                                        ~~~~~~~~">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/gradle/libs.versions.toml"
+            line="59"
+            column="73"/>
+    </issue>
+
+    <issue
+        id="LocalContextGetResourceValueCall"
+        message="Querying resource values using LocalContext.current"
+        errorLine1="        stubToast = context.getString(R.string.thread_person_added, number)"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/thread/ThreadScreen.kt"
+            line="178"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="LocalContextResourcesRead"
+        message="Reading Resources using LocalContext.current.resources"
+        errorLine1="    val metrics = context.resources.displayMetrics"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/media/PhotoViewerScreen.kt"
+            line="169"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/builder/BuilderScreen.kt"
+            line="103"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/builder/BuilderScreen.kt"
+            line="397"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/compose/ComposeScreen.kt"
+            line="132"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/filtered/FilteredScreen.kt"
+            line="111"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/inbox/InboxScreen.kt"
+            line="97"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/inbox/InboxScreen.kt"
+            line="201"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/media/MmsPictureTile.kt"
+            line="55"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/components/PinotSwitch.kt"
+            line="48"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/rules/RulesListScreen.kt"
+            line="115"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/settings/SettingsScreen.kt"
+            line="144"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/thread/ThreadScreen.kt"
+            line="136"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/thread/ThreadScreen.kt"
+            line="312"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="StateFlowValueCalledInComposition"
+        message="StateFlow.value should not be called within composition"
+        errorLine1="                    state = RulesListUiState(toastMessage = session.message.value),"
+        errorLine2="                                                                            ~~~~~">
+        <location
+            file="src/androidTest/java/com/pinotrouge/messaging/ui/rules/FilterSaveToastInstrumentedTest.kt"
+            line="38"
+            column="77"/>
+    </issue>
+
+    <issue
+        id="Aligned16KB"
+        message="The native library `arm64-v8a/libmockkjvmtiagent.so` (from `io.mockk:mockk-agent-android:1.14.2`) is not 16 KB aligned">
+        <location
+            file="$HOME/AndroidStudioProjects/KotlinProjects/PinotRouge-Public/../../../../../private/var/folders/9t/6f9ynxkn78zb1_17997kj7dr0000gn/T/cursor-sandbox-cache/804b3bd289a4b7de48084d340063fb18/gradle/caches/9.5.0/transforms/fe8b2a456af928cf72c33454a74bca81/transformed/mockk-agent-android-1.14.2/jni/arm64-v8a/libmockkjvmtiagent.so"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;messages&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;onboarding_importing&quot;>Importing %1$d messages&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="26"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;messages&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;onboarding_imported&quot;>Imported %1$d messages&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="27"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;unread&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;inbox_unread_count&quot;>%1$d unread&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="83"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;held&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;inbox_held_this_week&quot;>%1$d held by your filters this week&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="101"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;people&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;inbox_people_count&quot;>%1$d people&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="160"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;people&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;compose_group_hint&quot;>%1$d people — sends as a group message&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="165"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;kept&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;archive_subtitle&quot;>%1$d kept and still searchable&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="248"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;messages&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;sweep_scanned&quot;>Scanned %1$d messages&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="264"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;would&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;sweep_would_hold&quot;>%1$d would be held&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="265"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;messages&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;sweep_done_body&quot;>Moved %1$d messages to Held. You can restore any of them from Held messages.&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="275"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;could&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;sweep_failed_body&quot;>%1$d could not be moved and were left in the inbox.&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="276"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;held&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;filtered_held_count&quot;>%1$d held&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="299"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;days&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;builder_delete_after&quot;>Delete after %1$d days&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="339"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;messages&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;builder_delete_body&quot;>The filter is removed. The %1$d messages it is holding stay in Filtered and keep their reason.&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="346"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_address_book` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_address_book.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_bell_slash` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_bell_slash.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_chart_bar` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_chart_bar.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_envelope_open` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_envelope_open.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_file` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_file.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_map_pin` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_map_pin.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_microphone` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_microphone.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_minus` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_minus.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_tray` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_tray.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.search_placeholder_body` appears to be unused"
+        errorLine1="    &lt;string name=&quot;search_placeholder_body&quot;>Search is coming next — conversations, held messages and archive in one place.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="82"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.rules_new_filter` appears to be unused"
+        errorLine1="    &lt;string name=&quot;rules_new_filter&quot;>New filter&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="291"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.filtered_toast_moved` appears to be unused"
+        errorLine1="    &lt;string name=&quot;filtered_toast_moved&quot;>Moved to your inbox. Want a filter to stop holding this sender?&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="310"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.filtered_toast_blocked` appears to be unused"
+        errorLine1="    &lt;string name=&quot;filtered_toast_blocked&quot;>%1$s is blocked.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="311"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.filtered_toast_deleted` appears to be unused"
+        errorLine1="    &lt;string name=&quot;filtered_toast_deleted&quot;>Deleted.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="312"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.filtered_toast_deleted_all` appears to be unused"
+        errorLine1="    &lt;string name=&quot;filtered_toast_deleted_all&quot;>Held messages deleted.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="313"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.filtered_toast_move_failed` appears to be unused"
+        errorLine1="    &lt;string name=&quot;filtered_toast_move_failed&quot;>Couldn\&apos;t move to inbox. The message is still held.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="314"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.filtered_group_unknown` appears to be unused"
+        errorLine1="    &lt;string name=&quot;filtered_group_unknown&quot;>Unknown filter&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="315"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.filtered_group_deleted` appears to be unused"
+        errorLine1="    &lt;string name=&quot;filtered_group_deleted&quot;>Deleted filter&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="316"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.filtered_group_system` appears to be unused"
+        errorLine1="    &lt;string name=&quot;filtered_group_system&quot;>System&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="317"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.builder_reply_label` appears to be unused"
+        errorLine1="    &lt;string name=&quot;builder_reply_label&quot;>Auto-reply text&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="340"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.builder_reply_placeholder` appears to be unused"
+        errorLine1="    &lt;string name=&quot;builder_reply_placeholder&quot;>Sorry, this number does not accept offers.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="341"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseOfNonLambdaOffsetOverload"
+        message="State backed values should use the lambda overload of Modifier.offset"
+        errorLine1="                    .offset(x = knobOffset)"
+        errorLine2="                     ~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/components/PinotSwitch.kt"
+            line="116"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="UnnecessaryRequiredFeature"
+        message="Consider whether this feature (`android.hardware.telephony`) really is required for the app to function; you can set `android:required=&quot;false&quot;` to indicate that the feature is used but not required"
+        errorLine1="        android:name=&quot;android.hardware.telephony&quot;"
+        errorLine2="                      ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="22"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="                    prefs.edit().clear().apply()"
+        errorLine2="                    ~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/compose/ComposeViewModel.kt"
+            line="129"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="            val waitingUri = runCatching { Uri.parse(waiting) }.getOrNull() ?: return false"
+        errorLine2="                                           ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/compose/ComposeViewModel.kt"
+            line="273"
+            column="44"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `Bitmap.scale` instead?"
+        errorLine1="        return Bitmap.createScaledBitmap(source, w, h, true)"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/media/MmsImageEncoder.kt"
+            line="123"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="                    context.contentResolver.delete(Uri.parse(&quot;content://mms/$msgId/part&quot;), null, null)"
+        errorLine2="                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/MmsRepository.kt"
+            line="344"
+            column="52"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="                    context.contentResolver.delete(Uri.parse(&quot;content://mms/$msgId/addr&quot;), null, null)"
+        errorLine2="                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/MmsRepository.kt"
+            line="345"
+            column="52"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="            Uri.parse(&quot;content://mms/$msgId/part&quot;),"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/MmsRepository.kt"
+            line="472"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="        val partDir = Uri.parse(&quot;content://mms/$mmsId/part&quot;)"
+        errorLine2="                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/MmsRepository.kt"
+            line="490"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="                    val uri = ContentUris.withAppendedId(Uri.parse(&quot;content://mms/part&quot;), partId)"
+        errorLine2="                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/MmsRepository.kt"
+            line="508"
+            column="58"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="        val partDir = Uri.parse(&quot;content://mms/$mmsId/part&quot;)"
+        errorLine2="                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/MmsRepository.kt"
+            line="526"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="                val uri = ContentUris.withAppendedId(Uri.parse(&quot;content://mms/part&quot;), partId)"
+        errorLine2="                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/MmsRepository.kt"
+            line="541"
+            column="54"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="                ContentUris.withAppendedId(Uri.parse(&quot;content://mms/part&quot;), partId),"
+        errorLine2="                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/MmsRepository.kt"
+            line="547"
+            column="44"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="            Uri.parse(&quot;content://mms/$msgId/addr&quot;),"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/MmsRepository.kt"
+            line="669"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="            Uri.parse(&quot;content://mms/$msgId/addr&quot;),"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/MmsRepository.kt"
+            line="679"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="            Uri.parse(&quot;content://mms/$msgId/part&quot;),"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/MmsRepository.kt"
+            line="712"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="            Uri.parse(&quot;content://mms/$msgId/part&quot;),"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/MmsRepository.kt"
+            line="740"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="        val addrUri = android.net.Uri.parse(&quot;content://mms/$id/addr&quot;)"
+        errorLine2="                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/media/PhotoViewerScreen.kt"
+            line="115"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="        runCatching { Uri.parse(raw) }.getOrNull()"
+        errorLine2="                      ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/repo/QuarantineRepository.kt"
+            line="355"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="            getSharedPreferences(PREFS, MODE_PRIVATE).edit()"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/sms/SendToActivity.kt"
+            line="23"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="                Uri.parse(&quot;content://mms/$msgId/addr&quot;),"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/SmsRepository.kt"
+            line="390"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="                Uri.parse(&quot;content://mms-sms/canonical-address&quot;),"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/SmsRepository.kt"
+            line="431"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="                Uri.parse(&quot;content://mms-sms/canonical-addresses&quot;),"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/SmsRepository.kt"
+            line="448"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="                Uri.parse(&quot;content://mms/part&quot;),"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/data/telephony/SmsRepository.kt"
+            line="741"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="        data = Uri.parse(&quot;tel:$tel&quot;)"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/thread/ThreadScreen.kt"
+            line="732"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="        data = Uri.parse(&quot;tel:$tel&quot;)"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/thread/ThreadScreen.kt"
+            line="732"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="        val uri = runCatching { Uri.parse(raw) }.getOrNull() ?: return"
+        errorLine2="                                ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/thread/ThreadViewModel.kt"
+            line="327"
+            column="33"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="            val waitingUri = runCatching { Uri.parse(waiting) }.getOrNull() ?: return false"
+        errorLine2="                                           ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/thread/ThreadViewModel.kt"
+            line="1058"
+            column="44"/>
+    </issue>
+
+    <issue
+        id="ConstantLocale"
+        message="Assigning `Locale.getDefault()` to a final static field is suspicious; this code will not work correctly if the user changes locale while the app is running"
+        errorLine1="            DateTimeFormatter.ofPattern(&quot;H:mm&quot;, Locale.getDefault())"
+        errorLine2="                                                ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/filtered/FilteredViewModel.kt"
+            line="287"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="ConstantLocale"
+        message="Assigning `Locale.getDefault()` to a final static field is suspicious; this code will not work correctly if the user changes locale while the app is running"
+        errorLine1="            DateTimeFormatter.ofPattern(&quot;EEE&quot;, Locale.getDefault())"
+        errorLine2="                                               ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/filtered/FilteredViewModel.kt"
+            line="289"
+            column="48"/>
+    </issue>
+
+    <issue
+        id="ConstantLocale"
+        message="Assigning `Locale.getDefault()` to a final static field is suspicious; this code will not work correctly if the user changes locale while the app is running"
+        errorLine1="            DateTimeFormatter.ofPattern(&quot;M/d&quot;, Locale.getDefault())"
+        errorLine2="                                               ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pinotrouge/messaging/ui/filtered/FilteredViewModel.kt"
+            line="291"
+            column="48"/>
+    </issue>
+
+</issues>

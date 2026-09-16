@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# Runs the merge gate before any push.
+#
+# Enable once per clone:
+#     git config core.hooksPath .githooks
+#
+# Emergency bypass (say so in the PR if you use it):
+#     git push --no-verify
+
+set -e
+
+# Nothing to check when deleting a remote branch.
+while read -r _local_ref local_sha _remote_ref _remote_sha; do
+    case "$local_sha" in
+        "" | 0000000000000000000000000000000000000000) exit 0 ;;
+    esac
+done
+
+echo "pre-push: running the merge gate..."
+
+if ! ./gradlew :core:rules:test :app:testDebugUnitTest :app:compileDebugAndroidTestKotlin assembleDebug --console=plain -q; then
+    echo
+    echo "──────────────────────────────────────────────────────────────"
+    echo "  Gate FAILED. Push blocked."
+    echo
+    echo "  See CONTRIBUTING.md — do not delete tests to make the build pass."
+    echo "──────────────────────────────────────────────────────────────"
+    exit 1
+fi
+
+if grep -rn --include='*.kt' -E '^[[:space:]]*import[[:space:]]+(android|androidx)\.' core/rules/src; then
+    echo
+    echo "  core/rules must not depend on Android. Pass the value in instead."
+    exit 1
+fi
+
+echo "pre-push: gate green."

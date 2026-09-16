@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pinot Rouge</string>
+
+    <!-- Onboarding — prototype copy, verbatim (PinotPhone.dc.html), except onboarding_promise_1: "picture message" dropped until MMS viewing ships (fix/picture-message-copy; AppReviewTriage Decision 2). Do not restore. settings_default_app_body is the other divergence. -->
+    <string name="onboarding_app_name">Pinot Rouge</string>
+    <string name="onboarding_tagline">A full messaging app that keeps the noise out — with filters you write, in words you choose.</string>
+    <string name="onboarding_promise_1">Every text and group thread — the whole job of a texting app.</string>
+    <string name="onboarding_promise_2">Filters you write in plain language, matched right here on your phone.</string>
+    <string name="onboarding_promise_3">Nothing is deleted behind your back. Held messages wait for you.</string>
+    <string name="onboarding_get_started">Get started</string>
+    <string name="onboarding_footnote">Filtering runs on this phone. Nothing is uploaded.</string>
+
+    <string name="onboarding_role_title">Make Pinot Rouge your texting app</string>
+    <string name="onboarding_role_body">Android only lets one app send and receive texts. Switching hands us the whole pipeline — incoming texts, picture messages, and quick replies to declined calls.</string>
+    <string name="onboarding_duties_kicker">What we take on</string>
+    <string name="onboarding_duty_1">Receiving texts and picture messages</string>
+    <string name="onboarding_duty_2">Composing when another app asks you to text someone</string>
+    <string name="onboarding_duty_3">Quick replies when you decline a call</string>
+    <string name="onboarding_duty_4">Keeping Android’s shared message store up to date</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_not_now">Not now</string>
+
+    <string name="onboarding_import_title">Bringing your messages over</string>
+    <string name="onboarding_import_body">Your history stays in Android\'s own message store, so nothing is lost if you ever switch back.</string>
+    <string name="onboarding_importing">Importing %1$d messages</string>
+    <string name="onboarding_imported">Imported %1$d messages</string>
+    <string name="onboarding_importing_cta">Importing…</string>
+    <string name="onboarding_percent">%1$d%%</string>
+
+    <string name="onboarding_packs_title">Start with a few filters</string>
+    <string name="onboarding_packs_body">Turn any of these off later, or write your own from scratch.</string>
+    <string name="onboarding_pack_links_name">Links from strangers</string>
+    <string name="onboarding_pack_links_desc">Hold texts with links from numbers not in your contacts</string>
+    <string name="onboarding_pack_promos_name">Promotions and sales</string>
+    <string name="onboarding_pack_promos_desc">Coupons, flash sales, cart reminders</string>
+    <string name="onboarding_pack_loans_name">Loans and crypto</string>
+    <string name="onboarding_pack_loans_desc">Pre-approvals, wallets, investment pitches</string>
+    <string name="onboarding_pack_quiet_name">Quiet hours</string>
+    <string name="onboarding_pack_quiet_desc">Silence unknown senders between 10 pm and 7 am</string>
+    <string name="onboarding_open_inbox">Open my inbox</string>
+
+    <string name="onboarding_role_sheet_title">Change your texting app?</string>
+    <string name="onboarding_role_sheet_body">The app you pick handles all texts and picture messages on this phone.</string>
+    <string name="onboarding_role_option_pinot">Pinot Rouge</string>
+    <string name="onboarding_role_option_messages">Messages</string>
+    <string name="onboarding_role_cancel">Cancel</string>
+    <string name="onboarding_role_set_default">Set as default</string>
+
+    <!-- Notifications (feat/sms-stack) -->
+    <string name="notif_channel_messages">Messages</string>
+    <string name="notif_channel_messages_desc">Incoming texts</string>
+    <string name="notif_channel_silent">Silent messages</string>
+    <string name="notif_channel_silent_desc">Messages delivered without sound</string>
+
+    <!-- Inbox / Chats (feat/ui-inbox, feat/three-tab-nav) — Version 3: screen title Messages -->
+    <string name="inbox_title">Messages</string>
+    <plurals name="nav_chats_unread_a11y">
+        <item quantity="one">Chats, %d unread message</item>
+        <item quantity="other">Chats, %d unread messages</item>
+    </plurals>
+    <!-- Bottom bar · Filtered (fix/filtered-in-bottom-nav) — Version 5 prototype -->
+    <string name="nav_filtered">Filtered</string>
+    <plurals name="nav_filtered_held_a11y">
+        <item quantity="one">Filtered, %d held message</item>
+        <item quantity="other">Filtered, %d held messages</item>
+    </plurals>
+    <string name="nav_unread_badge_a11y">%1$s unread</string>
+    <string name="nav_held_badge_a11y">%1$s held</string>
+    <!-- Search screen (feat/ui-search) — reached from Chats pill, not a tab -->
+    <string name="search_field_placeholder">Search messages and people</string>
+    <string name="search_clear_a11y">Clear search</string>
+    <string name="search_jump_to">Jump to</string>
+    <string name="search_empty_title">Nothing matched \"%1$s\"</string>
+    <string name="search_empty_body">Held messages are searched too. Try a name, a number, or a word from the message.</string>
+    <string name="search_tag_held">Held by a filter</string>
+    <string name="search_tag_archived">Archived</string>
+    <string name="search_permission_title">Can\'t read your messages</string>
+    <string name="search_permission_body">Pinot Rouge needs permission to read texts so search can look through conversations.</string>
+    <string name="search_permission_cta">Allow access</string>
+    <!-- Kept so older references still resolve; tab is no longer a placeholder. -->
+    <string name="search_placeholder_body">Search is coming next — conversations, held messages and archive in one place.</string>
+    <string name="inbox_unread_count">%1$d unread</string>
+    <string name="inbox_search_placeholder">Search messages and people</string>
+    <string name="inbox_footer">Older messages are grouped by who they are from</string>
+    <string name="inbox_empty">No messages yet</string>
+    <string name="inbox_empty_hint">When texts arrive they will show up here.</string>
+    <string name="inbox_empty_filter">Nothing matches this filter</string>
+    <string name="inbox_otp_copy">Copy code %1$s</string>
+    <string name="inbox_otp_copied">Copied %1$s</string>
+    <string name="inbox_otp_expires">expires in 8 min</string>
+    <!-- Preview mode banner (feat/preview-mode-banner) — same plain voice as Settings -->
+    <string name="inbox_preview_banner_title">Filtering is not running</string>
+    <string name="inbox_preview_banner_body">Pinot Rouge has to be your default texting app before it can hold anything.</string>
+    <string name="inbox_preview_banner_cta">Make it default</string>
+    <!-- Preview-mode read permission (fix/preview-mode-permissions) — never look like an empty inbox -->
+    <string name="inbox_permission_title">Can\'t read your messages</string>
+    <string name="inbox_permission_body">Pinot Rouge needs permission to read texts so you can browse them before making it your default app.</string>
+    <string name="inbox_permission_cta">Allow access</string>
+    <!-- Quiet held line (feat/held-line) — Version 3 Chats; absent when count is 0 -->
+    <string name="inbox_held_this_week">%1$d held by your filters this week</string>
+    <string name="inbox_held_line_a11y">Open held messages</string>
+
+    <!-- Batch selection / delete (feat/ui-batch-delete) -->
+    <plurals name="batch_selected_count">
+        <item quantity="one">%d selected</item>
+        <item quantity="other">%d selected</item>
+    </plurals>
+    <plurals name="batch_delete_conversations_title">
+        <item quantity="one">Delete %d conversation?</item>
+        <item quantity="other">Delete %d conversations?</item>
+    </plurals>
+    <string name="batch_delete_conversations_body">You will have a few seconds to undo.</string>
+    <plurals name="batch_delete_messages_title">
+        <item quantity="one">Delete %d message?</item>
+        <item quantity="other">Delete %d messages?</item>
+    </plurals>
+    <string name="batch_delete_messages_body">You will have a few seconds to undo.</string>
+    <plurals name="batch_delete_held_title">
+        <item quantity="one">Delete %d held message?</item>
+        <item quantity="other">Delete %d held messages?</item>
+    </plurals>
+    <string name="batch_delete_held_body">You will have a few seconds to undo.</string>
+    <string name="batch_delete_confirm">Delete</string>
+    <string name="batch_delete_cancel">Cancel</string>
+    <string name="batch_undo">Undo</string>
+    <string name="batch_close_selection">Close selection</string>
+    <string name="batch_delete_action">Delete selected</string>
+    <string name="batch_archive_action">Archive selected</string>
+    <plurals name="batch_deleted_conversations">
+        <item quantity="one">Deleted %d conversation</item>
+        <item quantity="other">Deleted %d conversations</item>
+    </plurals>
+    <plurals name="batch_archived_conversations">
+        <item quantity="one">Archived %d conversation</item>
+        <item quantity="other">Archived %d conversations</item>
+    </plurals>
+    <plurals name="batch_deleted_messages">
+        <item quantity="one">Deleted %d message</item>
+        <item quantity="other">Deleted %d messages</item>
+    </plurals>
+    <plurals name="batch_deleted_held">
+        <item quantity="one">Deleted %d held message</item>
+        <item quantity="other">Deleted %d held messages</item>
+    </plurals>
+
+    <!-- Thread header / overflow (feat/thread-overflow-v3) — Version 3, six items -->
+    <string name="thread_back">Back</string>
+    <string name="thread_call">Call</string>
+    <string name="thread_video">Video call</string>
+    <string name="thread_menu">Conversation menu</string>
+    <string name="thread_menu_details">Details</string>
+    <string name="thread_menu_add_people">Add people</string>
+    <string name="thread_menu_notifications">Notifications</string>
+    <string name="thread_menu_search_in_conversation">Search in conversation</string>
+    <string name="thread_menu_filter_sender">Filter this sender</string>
+    <string name="thread_menu_delete_conversation">Delete conversation</string>
+    <string name="thread_new_texts">New texts</string>
+    <!-- Group threads UI (feat/group-threads-ui) -->
+    <string name="inbox_people_count">%1$d people</string>
+    <string name="thread_details_close">Close</string>
+    <string name="thread_details_empty">No participants found for this conversation.</string>
+    <string name="thread_person_added">Added %1$s — next message sends as a group.</string>
+    <string name="compose_add_contact">Add contact</string>
+    <string name="compose_group_hint">%1$d people — sends as a group message</string>
+    <!-- Stubs until notifications sheet / in-thread search land -->
+    <string name="thread_stub_notifications">Notification settings for this chat are not available yet.</string>
+    <string name="thread_stub_search">Search in conversation is not available yet.</string>
+    <string name="thread_stub_video">Video calling is not available yet.</string>
+
+    <!-- Settings (feat/ui-settings) — prototype copy, except settings_default_app_body: picture viewing is unfinished (fix/picture-message-copy; AppReviewTriage Decision 2). Do not restore. -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_default_app_title">Default texting app</string>
+    <string name="settings_default_app_body">Pinot Rouge sends and receives your texts, and writes them into Android\'s shared message store. Picture messages arrive, but viewing them is not finished yet.</string>
+    <string name="settings_holder_pinot">Pinot Rouge</string>
+    <string name="settings_holder_other">Not set</string>
+    <string name="settings_role_notice_title">Spam filtering is not running</string>
+    <string name="settings_role_notice_body">Messages are not being filtered. Pinot Rouge cannot filter spam until it is the default messaging app on this phone.</string>
+    <string name="settings_role_notice_cta">Set as default messaging app</string>
+    <string name="settings_held_name">Weekly digest of held messages</string>
+    <string name="settings_held_desc">One quiet summary each Sunday</string>
+    <string name="settings_contacts_name">Never filter my contacts</string>
+    <string name="settings_contacts_desc">People you know always reach the inbox</string>
+    <string name="settings_otp_name">Show copy button for codes</string>
+    <string name="settings_otp_desc">One-tap copy, cleared from the clipboard after a minute</string>
+    <string name="settings_dark_name">Dark theme</string>
+    <string name="settings_dark_desc_on">Easy on the eyes at night</string>
+    <string name="settings_dark_desc_off">Currently using the light theme</string>
+    <!-- Version 4 accent theme row — copy exact -->
+    <string name="settings_accent_name">Accent Color</string>
+    <string name="settings_accent_desc">Each one carries its own dark theme</string>
+    <string name="settings_accent_cd">%1$s accent</string>
+    <string name="settings_accent_selected_cd">%1$s accent, selected</string>
+    <!-- Six offered accents (V4 accentOptions). Labels are wine names; amber→Chardonnay, tangerine→Amber. -->
+    <string name="settings_accent_cabernet">Cabernet</string>
+    <string name="settings_accent_rose">Rosé</string>
+    <string name="settings_accent_concord">Concord</string>
+    <string name="settings_accent_malbec">Malbec</string>
+    <string name="settings_accent_thompson">Thompson</string>
+    <string name="settings_accent_chardonnay">Chardonnay</string>
+    <string name="settings_accent_amber">Amber</string>
+    <string name="settings_accent_grigio">Grigio</string>
+    <string name="settings_accent_blanc">Blanc</string>
+    <string name="settings_footnote">Message text never leaves this phone. Filters are matched locally, and nothing you send or receive is uploaded anywhere.</string>
+    <!-- Version 3 Settings groups (feat/three-tab-nav) -->
+    <string name="settings_group_messages">Messages</string>
+    <string name="settings_group_filtering">Filtering</string>
+    <string name="settings_group_appearance">Appearance</string>
+    <string name="settings_archived">Archived</string>
+    <string name="settings_archived_desc">Conversations you moved out of the way</string>
+    <string name="settings_auto_download">Download pictures automatically</string>
+    <string name="settings_auto_download_desc">Off means you choose which ones to download. Your filters run once a message is downloaded.</string>
+    <string name="settings_download_roaming">Download while roaming</string>
+    <string name="settings_download_roaming_desc">Off by default — data on another network can cost more</string>
+    <string name="mms_download">Download</string>
+    <string name="mms_downloading">Downloading photo…</string>
+    <string name="mms_not_downloaded">Photo not downloaded</string>
+    <string name="mms_download_failed">Photo didn’t download</string>
+    <string name="mms_try_again">Try again</string>
+    <string name="mms_expired">This photo is no longer available</string>
+    <string name="mms_part_video">Video</string>
+    <string name="mms_part_audio">Audio</string>
+    <string name="mms_part_contact">Contact card</string>
+    <string name="mms_part_unsupported">Not supported yet</string>
+    <string name="mms_a11y_photo_from">Photo from %1$s</string>
+    <string name="mms_a11y_photo_unknown_sender">Photo from an unknown sender</string>
+    <string name="mms_a11y_photo_sent">Photo you sent</string>
+    <string name="mms_a11y_downloading">Photo, downloading</string>
+    <string name="mms_a11y_not_downloaded">Photo not downloaded. Double tap to download.</string>
+    <string name="mms_a11y_download_failed">Photo didn’t download. Double tap to try again.</string>
+    <string name="mms_a11y_expired">Photo, no longer available</string>
+    <string name="mms_a11y_unsupported">%1$s, cannot be shown</string>
+    <!-- 17.5 send states — Eric, item 10. Ellipsis is U+2026; separator is U+00B7. Do not reuse mms_try_again. -->
+    <string name="mms_sending">Sending…</string>
+    <string name="mms_send_failed">Not sent · Tap to retry</string>
+    <string name="mms_too_large">That photo is too large to send, even at the smallest size.</string>
+    <!-- Attach sheet — V5 prototype copy. Two cells + empty third; File/Location/Contact/Voice are not shipped. -->
+    <string name="mms_attach_sheet_title">Add to this message</string>
+    <string name="mms_attach_gallery">Gallery</string>
+    <string name="mms_attach_camera">Camera</string>
+    <string name="mms_attach_cd">Add to this message</string>
+    <string name="mms_staged_remove_cd">Remove photo</string>
+    <!-- Trailing values on Settings link rows (feat/settings-row-values) -->
+    <string name="settings_filters_on">%1$d on</string>
+    <string name="settings_link_row_a11y">%1$s, %2$s</string>
+    <!-- Archive overlay (feat/archive) — Version 3 copy exact -->
+    <string name="archive_title">Archived</string>
+    <string name="archive_subtitle">%1$d kept and still searchable</string>
+    <string name="archive_empty_title">Nothing archived</string>
+    <string name="archive_empty_body">Conversations you archive move here. They stay searchable, and nothing is deleted.</string>
+    <string name="archive_unarchive">Unarchive</string>
+    <string name="settings_filters">Filters</string>
+    <string name="settings_filters_desc">Rules that decide what reaches your inbox</string>
+    <string name="settings_held_messages">Held messages</string>
+    <string name="settings_held_messages_desc">Review what your filters caught</string>
+    <!-- Inbox sweep (feat/apply-filters-to-inbox) — new copy, no design-reference screen -->
+    <string name="settings_run_filters">Run filters on my inbox</string>
+    <string name="settings_run_filters_desc">Scan messages already on this phone</string>
+    <string name="sweep_title">Run filters on my inbox</string>
+    <string name="sweep_scanning">Scanning your inbox…</string>
+    <string name="sweep_moving">Moving matches…</string>
+    <string name="sweep_moving_progress">Moving %1$d of %2$d…</string>
+    <string name="sweep_scan_failed">Could not scan your inbox.</string>
+    <string name="sweep_scanned">Scanned %1$d messages</string>
+    <string name="sweep_would_hold">%1$d would be held</string>
+    <string name="sweep_none_would_hold">Nothing would be held. Your filters did not match any of these texts.</string>
+    <string name="sweep_no_filters">No filters are on. Turn one on, then try again.</string>
+    <string name="sweep_contacts_warning">%1$d of these are from people in your contacts.</string>
+    <string name="sweep_review">Review %1$d</string>
+    <string name="sweep_move_them">Move them</string>
+    <string name="sweep_back_to_summary">Back to summary</string>
+    <string name="sweep_try_again">Try again</string>
+    <string name="sweep_moved_toast">Moved %1$d to Held</string>
+    <string name="sweep_undo">Undo</string>
+    <string name="sweep_done_body">Moved %1$d messages to Held. You can restore any of them from Held messages.</string>
+    <string name="sweep_failed_body">%1$d could not be moved and were left in the inbox.</string>
+    <string name="filtered_title_held">Held messages</string>
+    <!-- Full-screen held message (feat/held-message-screen) -->
+    <string name="held_message_title">Held message</string>
+    <string name="held_message_why_kicker">WHY THIS WAS HELD</string>
+    <string name="held_message_why_rule">Caught by \"%1$s\"</string>
+    <string name="held_message_why_links">Links in this message are not tappable here.</string>
+    <string name="held_message_why_silent">The sender cannot tell that you opened this.</string>
+    <string name="held_message_gone">This message is no longer held.</string>
+
+    <!-- Filters list (feat/ui-rules-list) — prototype copy -->
+    <string name="rules_title">Filters</string>
+    <!-- Overlay header action — Version 3 copy is "New", not "New filter" -->
+    <string name="rules_new">New</string>
+    <!-- Empty-state CTA keeps longer label -->
+    <string name="rules_new_filter">New filter</string>
+    <!-- V3/V5 empty state — header "New" stays short; empty CTA is the full phrase -->
+    <string name="rules_empty_cta">Write my first filter</string>
+    <string name="rules_footer">Filters run in order, top to bottom. A message stops at the first one that matches. Long-press a filter to reorder.</string>
+    <string name="rules_empty_title">No filters yet</string>
+    <string name="rules_empty_body">Write one in plain words — if the sender is not in your contacts and there is a link, hold it.</string>
+
+    <!-- Filtered / quarantine (feat/ui-filtered) — V3 title is "Held messages" (filtered_title_held) -->
+    <string name="filtered_held_count">%1$d held</string>
+    <!-- Authorised hybrid-retention copy — not the prototype's "then deleted" -->
+    <string name="filtered_subtitle">Held here for 30 days, then filed into your message history. Your rules decided each one — tap to see why.</string>
+    <!-- Empty state — Version 3 copy exact (the screen that proves the promise) -->
+    <string name="filtered_empty_title">Nothing is being held</string>
+    <string name="filtered_empty_body">Your filters have not caught anything yet. Anything they do catch waits here for 30 days.</string>
+    <string name="filtered_empty_review_filters">Review my filters</string>
+    <string name="filtered_move_to_inbox">Move to inbox</string>
+    <string name="filtered_block_sender">Block sender</string>
+    <string name="filtered_delete">Delete</string>
+    <string name="filtered_delete_everything">Delete everything held</string>
+    <string name="filtered_toast_moved">Moved to your inbox. Want a filter to stop holding this sender?</string>
+    <string name="filtered_toast_blocked">%1$s is blocked.</string>
+    <string name="filtered_toast_deleted">Deleted.</string>
+    <string name="filtered_toast_deleted_all">Held messages deleted.</string>
+    <string name="filtered_toast_move_failed">Couldn\'t move to inbox. The message is still held.</string>
+    <string name="filtered_group_unknown">Unknown filter</string>
+    <string name="filtered_group_deleted">Deleted filter</string>
+    <string name="filtered_group_system">System</string>
+    <string name="filtered_delete_all_title">Delete everything held?</string>
+    <string name="filtered_delete_all_body">This permanently deletes every held message. It cannot be undone.</string>
+    <string name="filtered_delete_all_confirm">Delete everything</string>
+    <string name="filtered_delete_all_cancel">Cancel</string>
+
+    <!-- Filter builder (feat/ui-builder) — prototype copy -->
+    <string name="builder_title_new">New filter</string>
+    <string name="builder_title_edit">Edit filter</string>
+    <string name="builder_close">Close</string>
+    <string name="builder_save">Save</string>
+    <string name="builder_name_label">Filter name</string>
+    <string name="builder_name_placeholder">Name this filter</string>
+    <string name="builder_when_kicker">When a message…</string>
+    <string name="builder_then_kicker">Then Pinot Rouge will…</string>
+    <string name="builder_match_all">match all</string>
+    <string name="builder_match_any">match any</string>
+    <string name="builder_lead_when">When</string>
+    <string name="builder_lead_and">AND</string>
+    <string name="builder_lead_or">OR</string>
+    <string name="builder_remove">Remove</string>
+    <string name="builder_add_condition">Add another condition</string>
+    <string name="builder_delete_after">Delete after %1$d days</string>
+    <string name="builder_reply_label">Auto-reply text</string>
+    <string name="builder_reply_placeholder">Sorry, this number does not accept offers.</string>
+    <string name="builder_plain_kicker">In plain words</string>
+    <!-- Rule deletion (feat/rule-deletion) — brief copy is binding; no Version N design -->
+    <string name="builder_delete_filter">Delete filter</string>
+    <string name="builder_delete_title">Delete \u201C%1$s\u201D?</string>
+    <string name="builder_delete_body">The filter is removed. The %1$d messages it is holding stay in Filtered and keep their reason.</string>
+    <string name="builder_delete_body_one">The filter is removed. The 1 message it is holding stays in Filtered and keeps its reason.</string>
+    <string name="builder_delete_confirm">Delete filter</string>
+    <string name="builder_delete_cancel">Cancel</string>
+
+    <!-- Weekly digest (feat/work-jobs) -->
+    <string name="digest_title">Held messages this week</string>
+</resources>
+
