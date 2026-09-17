@@ -10,7 +10,7 @@ kotlin = "2.4.20"
 composeBom = "2026.09.00"
 
 # Added for Pinot Rouge — see README.md (Architecture).
-ksp = "2.3.10"
+ksp = "2.3.12"
 room = "2.8.5"
 hilt = "2.60.1"
 hiltNavigationCompose = "1.4.0"
