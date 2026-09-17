@@ -1,5 +1,5 @@
 [versions]
-agp = "9.3.2"
+agp = "9.4.0"
 coreKtx = "1.19.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
@@ -10,7 +10,7 @@ kotlin = "2.4.20"
 composeBom = "2026.09.00"
 
 # Added for Pinot Rouge — see README.md (Architecture).
-ksp = "2.3.10"
+ksp = "2.3.12"
 room = "2.8.5"
 hilt = "2.60.1"
 hiltNavigationCompose = "1.4.0"
@@ -57,7 +57,7 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 # Instrumented-suite (test/instrumented-suite) — device tests only
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "workManager" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
-mockk-android = { group = "io.mockk", name = "mockk-android", version = "1.14.2" }
+mockk-android = { group = "io.mockk", name = "mockk-android", version = "1.14.11" }
 # Linear-time regex for MATCHES_REGEX. Pure JVM — keep out of :app if unused there.
 re2j = { group = "com.google.re2j", name = "re2j", version.ref = "re2j" }
 
