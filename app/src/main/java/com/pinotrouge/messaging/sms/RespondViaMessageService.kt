@@ -25,7 +25,7 @@ class RespondViaMessageService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val parsed = SendToParser.parse(
             scheme = intent?.data?.scheme,
-            schemeSpecificPart = intent?.data?.schemeSpecificPart,
+            encodedSchemeSpecificPart = intent?.data?.encodedSchemeSpecificPart,
             extraBody = intent?.getStringExtra(Intent.EXTRA_TEXT),
         )
         val recipient = parsed?.recipient.orEmpty()

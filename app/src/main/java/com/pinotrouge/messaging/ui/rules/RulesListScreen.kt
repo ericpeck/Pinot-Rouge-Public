@@ -63,6 +63,11 @@ import com.pinotrouge.messaging.rules.Rule
 import com.pinotrouge.messaging.rules.SenderOp
 import com.pinotrouge.messaging.rules.TextOp
 import com.pinotrouge.messaging.rules.TimeOp
+import com.pinotrouge.messaging.rules.hasUnrunnableRegex
+import com.pinotrouge.messaging.rules.isEffectivelyEnabled
+import com.pinotrouge.messaging.rules.isUnreadable
+import com.pinotrouge.messaging.ui.builder.REGEX_UNRUNNABLE_REASON
+import com.pinotrouge.messaging.ui.builder.UNSUPPORTED_RULE_REASON
 import com.pinotrouge.messaging.ui.components.PinotButton
 import com.pinotrouge.messaging.ui.components.PinotButtonVariant
 import com.pinotrouge.messaging.ui.components.PinotIcons
@@ -295,6 +300,16 @@ internal fun targetIndexForDrag(
     return best?.index
 }
 
+/** Copy already used by the builder — shown on the list when the engine skips the rule. */
+internal fun ruleListPauseReason(rule: Rule): String? {
+    if (!rule.isUnreadable) return null
+    return if (rule.conditions.any { it.hasUnrunnableRegex }) {
+        REGEX_UNRUNNABLE_REASON
+    } else {
+        UNSUPPORTED_RULE_REASON
+    }
+}
+
 @Composable
 private fun RulesListEmpty(
     onNewFilter: () -> Unit,
@@ -435,7 +450,7 @@ private fun RuleCard(
                 Text(
                     text = item.rule.name,
                     style = PinotTypography.bodyLarge.copy(fontSize = 14.sp),
-                    color = if (item.rule.enabled) colors.text else colors.dimmer,
+                    color = if (item.rule.isEffectivelyEnabled) colors.text else colors.dimmer,
                 )
                 Text(
                     text = item.summary,
@@ -446,11 +461,27 @@ private fun RuleCard(
                     color = colors.dim,
                     modifier = Modifier.padding(top = 3.dp),
                 )
+                val pauseReason = ruleListPauseReason(item.rule)
+                if (pauseReason != null) {
+                    Text(
+                        text = pauseReason,
+                        style = PinotTypography.bodySmall.copy(
+                            fontSize = 11.5.sp,
+                            lineHeight = 17.sp,
+                        ),
+                        color = colors.dim,
+                        modifier = Modifier
+                            .padding(top = 6.dp)
+                            .testTag("rule_pause_reason"),
+                    )
+                }
             }
             // Switch is outside the drag hit target — toggle never starts a drag.
+            // Unreadable rules are skipped by the engine; do not show them as on.
             PinotSwitch(
-                checked = item.rule.enabled,
+                checked = item.rule.isEffectivelyEnabled,
                 onCheckedChange = onToggle,
+                enabled = !item.rule.isUnreadable,
             )
         }
         Row(

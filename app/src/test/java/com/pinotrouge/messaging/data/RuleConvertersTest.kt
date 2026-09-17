@@ -13,6 +13,7 @@ import com.pinotrouge.messaging.rules.SenderOp
 import com.pinotrouge.messaging.rules.TextOp
 import com.pinotrouge.messaging.rules.TimeOp
 import com.pinotrouge.messaging.rules.isUnreadable
+import com.pinotrouge.messaging.rules.isEffectivelyEnabled
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -262,5 +263,41 @@ class RuleConvertersTest {
         )
         assertTrue(restored.isUnreadable)
         assertFalse(restored.enabled)
+    }
+
+    @Test
+    fun `nested class regex keeps the original pattern text`() {
+        val originalPattern = "[a-d[m-p]]"
+        val conditions = listOf(Condition.Text(TextOp.MATCHES_REGEX, originalPattern))
+        val restored = converters.toConditions(converters.fromConditions(conditions))
+        assertEquals(originalPattern, (restored.single() as Condition.Text).value)
+        val rule = Rule(
+            id = "r-nested",
+            name = "Nested",
+            enabled = true,
+            order = 0,
+            conditions = restored,
+            actions = linkedSetOf(Action.HOLD),
+        )
+        assertFalse(rule.isUnreadable)
+        assertTrue(rule.isEffectivelyEnabled)
+    }
+
+    @Test
+    fun `intersection regex keeps the original pattern and stays unreadable`() {
+        val originalPattern = "[a-z&&[^aeiou]]"
+        val conditions = listOf(Condition.Text(TextOp.MATCHES_REGEX, originalPattern))
+        val restored = converters.toConditions(converters.fromConditions(conditions))
+        assertEquals(originalPattern, (restored.single() as Condition.Text).value)
+        val rule = Rule(
+            id = "r-inter",
+            name = "Intersection",
+            enabled = true,
+            order = 0,
+            conditions = restored,
+            actions = linkedSetOf(Action.HOLD),
+        )
+        assertTrue(rule.isUnreadable)
+        assertFalse(rule.isEffectivelyEnabled)
     }
 }

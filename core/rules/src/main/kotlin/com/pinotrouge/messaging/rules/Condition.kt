@@ -111,8 +111,9 @@ enum class TextOp(val label: String, val needsValue: Boolean) {
 
     /**
      * Value is a user-authored regular expression, matched with RE2 (linear
-     * time). Unsupported syntax makes the **rule** [Rule.isUnreadable] rather
-     * than treating the condition as false (which would under-filter).
+     * time). The saved text is never rewritten. Unsupported or Java-only
+     * syntax that cannot be converted makes the **rule** [Rule.isUnreadable]
+     * rather than treating the condition as false (which would under-filter).
      */
     MATCHES_REGEX("matches the pattern", needsValue = true),
 }

@@ -69,4 +69,52 @@ class RegexAdversarialInstrumentedTest {
         )
         assertEquals(FilterDecision.Allow, decision)
     }
+
+    @Test
+    fun nestedClassUnionMatchesOnDevice() {
+        val rule = Rule(
+            id = "nested",
+            name = "nested class",
+            order = 0,
+            conditions = listOf(Condition.Text(TextOp.MATCHES_REGEX, "[a-d[m-p]]")),
+            actions = linkedSetOf(Action.HOLD),
+        )
+        assertFalse(rule.isUnreadable)
+        val decision = engine.evaluate(
+            IncomingMessage(
+                sender = "5550100",
+                body = "a",
+                receivedAt = Instant.EPOCH,
+            ),
+            listOf(rule),
+            EvaluationContext(isKnownContact = false, neverFilterContacts = true),
+        )
+        assertTrue(decision is FilterDecision.Matched)
+    }
+
+    @Test
+    fun intersectionPausesAnyOnDevice() {
+        val rule = Rule(
+            id = "inter",
+            name = "intersection",
+            order = 0,
+            match = MatchMode.ANY,
+            conditions = listOf(
+                Condition.Text(TextOp.MATCHES_REGEX, "[a-z&&[^aeiou]]"),
+                Condition.Sender(SenderOp.IS_SHORT_CODE),
+            ),
+            actions = linkedSetOf(Action.HOLD),
+        )
+        assertTrue(rule.isUnreadable)
+        val decision = engine.evaluate(
+            IncomingMessage(
+                sender = "55555",
+                body = "bcd",
+                receivedAt = Instant.EPOCH,
+            ),
+            listOf(rule),
+            EvaluationContext(isKnownContact = false, neverFilterContacts = true),
+        )
+        assertEquals(FilterDecision.Allow, decision)
+    }
 }

@@ -91,4 +91,60 @@ class SendToUriInstrumentedTest {
         assertEquals("draft only", prefs.getString(SendToActivity.KEY_BODY, null))
         prefs.edit().clear().commit()
     }
+
+    @Test
+    fun opaqueAmpersandBody_isTomAndJerry_notTruncatedAtAmpersand() {
+        val uri = Uri.parse("sms:+15555550100?body=Tom%20%26%20Jerry")
+        assertEquals("Tom & Jerry", uri.schemeSpecificPart.substringAfter("body="))
+        val parsed = SendToActivity.parseSendTo(Intent(Intent.ACTION_SENDTO, uri))
+        assertEquals("+15555550100", parsed?.recipient)
+        assertEquals("Tom & Jerry", parsed?.body)
+    }
+
+    @Test
+    fun opaqueEncodedPlusAndEquals_stayInBody() {
+        val uri = Uri.parse("sms:5550100?body=2%2B2%3D4")
+        val parsed = SendToActivity.parseSendTo(Intent(Intent.ACTION_SENDTO, uri))
+        assertEquals("2+2=4", parsed?.body)
+    }
+
+    @Test
+    fun opaqueDoubleEncodedAmpersand_decodesOnce() {
+        val uri = Uri.parse("sms:5550100?body=%2526")
+        val parsed = SendToActivity.parseSendTo(Intent(Intent.ACTION_SENDTO, uri))
+        assertEquals("%26", parsed?.body)
+    }
+
+    @Test
+    fun hierarchicalAmpersandBody_decodesOnce() {
+        val uri = Uri.parse("sms://5550100?body=Tom%20%26%20Jerry")
+        assertTrue(uri.isHierarchical)
+        val parsed = SendToActivity.parseSendTo(Intent(Intent.ACTION_SENDTO, uri))
+        assertEquals("5550100", parsed?.recipient)
+        assertEquals("Tom & Jerry", parsed?.body)
+    }
+
+    @Test
+    fun unicodeBody_decodes() {
+        val uri = Uri.parse("sms:5550100?body=%E2%9C%93")
+        val parsed = SendToActivity.parseSendTo(Intent(Intent.ACTION_SENDTO, uri))
+        assertEquals("\u2713", parsed?.body)
+    }
+
+    @Test
+    fun malformedEscape_doesNotThrow() {
+        val uri = Uri.parse("sms:5550100?body=%nothex")
+        val parsed = SendToActivity.parseSendTo(Intent(Intent.ACTION_SENDTO, uri))
+        assertEquals("5550100", parsed?.recipient)
+        assertEquals("%nothex", parsed?.body)
+    }
+
+    @Test
+    fun extraText_doesNotGetPercentDecodedAgain() {
+        val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:5550100")).apply {
+            putExtra(Intent.EXTRA_TEXT, "100% done")
+        }
+        val parsed = SendToActivity.parseSendTo(intent)
+        assertEquals("100% done", parsed?.body)
+    }
 }

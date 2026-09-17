@@ -9,11 +9,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.ensureActive
 
 /**
  * Loads [uri] at [targetWidthPx]×[targetHeightPx]. A new target cancels the
  * in-flight decode (LaunchedEffect key change) so a fast scroll does not
  * decode into a recycled slot.
+ *
+ * Decode runs on Dispatchers.IO inside the loader. Do not write [bitmap]
+ * after cancellation: Compose can already be disposing the activity (the
+ * Android 16 `SlotWriter.moveSlotGapTo` crash in
+ * `HeldMediaUiInstrumentedTest.filteredRow_rendersHeldPhotoTile`).
  */
 @Composable
 fun rememberMmsPartImage(
@@ -27,7 +33,9 @@ fun rememberMmsPartImage(
         mutableStateOf<ImageBitmap?>(null)
     }
     LaunchedEffect(uri, targetWidthPx, targetHeightPx, scale, loader) {
-        bitmap = loader.load(uri, targetWidthPx, targetHeightPx, scale)
+        val loaded = loader.load(uri, targetWidthPx, targetHeightPx, scale)
+        ensureActive()
+        bitmap = loaded
     }
     return bitmap
 }
