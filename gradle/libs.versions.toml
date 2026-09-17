@@ -57,7 +57,7 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 # Instrumented-suite (test/instrumented-suite) — device tests only
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "workManager" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
-mockk-android = { group = "io.mockk", name = "mockk-android", version = "1.14.2" }
+mockk-android = { group = "io.mockk", name = "mockk-android", version = "1.14.11" }
 # Linear-time regex for MATCHES_REGEX. Pure JVM — keep out of :app if unused there.
 re2j = { group = "com.google.re2j", name = "re2j", version.ref = "re2j" }
 
