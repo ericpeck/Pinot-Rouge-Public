@@ -404,7 +404,7 @@ class InboxViewModel @Inject constructor(
     }
 
     /**
-     * Copies [code] via [OtpClipboard] (sensitive + 60s WorkManager clear).
+     * Copies [code] via [OtpClipboard] (sensitive + best-effort WorkManager clear).
      */
     fun copyOtp(threadId: Long, code: String) {
         otpClipboard.copyCode(code)

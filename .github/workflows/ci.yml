@@ -11,6 +11,7 @@ on:
 # gain write access. Do not switch to pull_request_target.
 permissions:
   contents: read
+  actions: write
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -22,6 +23,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
+      actions: write
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -47,6 +49,18 @@ jobs:
       - name: Assemble debug APK
         run: ./gradlew assembleDebug
 
+      - name: Production runtime dependency inventory
+        run: |
+          mkdir -p app/build/reports core/rules/build/reports
+          ./gradlew :app:dependencies --configuration debugRuntimeClasspath --console=plain \
+            > app/build/reports/debug-runtime-classpath.txt
+          ./gradlew :core:rules:dependencies --configuration runtimeClasspath --console=plain \
+            > core/rules/build/reports/runtime-classpath.txt
+          grep -q 'androidx.room:room-runtime' app/build/reports/debug-runtime-classpath.txt
+          grep -q 'androidx.work:work-runtime' app/build/reports/debug-runtime-classpath.txt
+          grep -q 'com.google.re2j:re2j' core/rules/build/reports/runtime-classpath.txt
+          echo "Inventory includes AndroidX Room, Work, and RE2 (direct + transitive)."
+
       - name: Android Lint
         run: ./gradlew :app:lintDebug
 
@@ -58,6 +72,17 @@ jobs:
           fi
           echo "core/rules is clean."
 
+      - name: Upload runtime dependency inventory
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: gradle-runtime-classpath
+          path: |
+            app/build/reports/debug-runtime-classpath.txt
+            core/rules/build/reports/runtime-classpath.txt
+          retention-days: 7
+          if-no-files-found: ignore
+
       - name: Upload lint and test reports
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -68,5 +93,7 @@ jobs:
             app/build/reports/tests/
             app/build/reports/lint-results-debug.html
             app/build/reports/lint-results-debug.xml
+            app/build/reports/debug-runtime-classpath.txt
+            core/rules/build/reports/runtime-classpath.txt
           retention-days: 7
           if-no-files-found: ignore

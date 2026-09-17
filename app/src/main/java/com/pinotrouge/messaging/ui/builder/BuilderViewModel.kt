@@ -157,7 +157,7 @@ class BuilderViewModel @Inject constructor(
      */
     fun save(onSaved: () -> Unit) {
         if (_uiState.value.saving) return
-        if (_uiState.value.draft.isReadOnly) return
+        if (!_uiState.value.draft.canSave) return
         viewModelScope.launch {
             _uiState.update { it.copy(saving = true) }
             try {

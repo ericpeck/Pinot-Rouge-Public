@@ -5,6 +5,8 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    # Version-update PRs are not vulnerability coverage. Maven/Android
+    # alerts depend on the default-branch dependency-submission workflow.
 
   - package-ecosystem: github-actions
     directory: /

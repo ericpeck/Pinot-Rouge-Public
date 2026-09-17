@@ -35,11 +35,17 @@ data class Rule(
     }
 }
 
-/** True when this build must not evaluate or rewrite the rule's conditions. */
+/** True when this build must not evaluate the rule (unknown lines or unrunnable regex). */
 val Rule.isUnreadable: Boolean
     get() = !match.isKnown ||
         actions.any { !it.isKnown } ||
-        conditions.any { it is Condition.Unsupported }
+        conditions.any { it is Condition.Unsupported || it.hasUnrunnableRegex }
+
+/** A MATCHES_REGEX condition this engine will not execute. */
+val Condition.hasUnrunnableRegex: Boolean
+    get() = this is Condition.Text &&
+        op == TextOp.MATCHES_REGEX &&
+        RegexPatterns.validate(value) !is RegexPatterns.Validity.Valid
 
 /** Whether every condition must hold, or just one. Unknown names stay inert. */
 data class MatchMode(val name: String) {

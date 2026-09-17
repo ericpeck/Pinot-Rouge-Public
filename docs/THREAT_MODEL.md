@@ -27,9 +27,9 @@ There is no app backend to impersonate.
 - Completion receivers (`MmsDownloadReceiver`, `MmsSendReceiver`, `SmsSentReceiver`) are not exported. SMS/MMS send `PendingIntent`s are **mutable** because the platform writes result extras; they target those non-exported receivers.
 - Notification `PendingIntent`s are immutable.
 - FileProvider is not exported; paths are cache `mms_send/` and `mms_download/` only.
-- `SENDTO` accepts only `sms` / `smsto` / `mms` / `mmsto`, with recipient and body length caps.
-- `MATCHES_REGEX` caps pattern and haystack length. The engine still uses Java's backtracking matcher.
-- Auto Backup is off; D2D extraction rules exclude quarantine storage. Android's shared store is a **separate** ownership domain.
+- `SENDTO` accepts only `sms` / `smsto` / `mms` / `mmsto`, with recipient and body length caps. Opaque and hierarchical SMS URIs are parsed from the scheme-specific part; `Uri.getQueryParameter` is not used.
+- `MATCHES_REGEX` uses RE2 (linear-time). Unsupported syntax (lookaround, backreferences, and similar) pauses the whole rule rather than treating the condition as false. Pattern and haystack length caps remain.
+- Auto Backup is off; D2D extraction rules exclude quarantine storage, pending-compose prefs, and WorkManager's database. Android's shared store is a **separate** ownership domain.
 
 ## Out of scope for this app to “fix”
 
@@ -41,6 +41,6 @@ There is no app backend to impersonate.
 ## Residual risks worth knowing
 
 - Mutable send/download `PendingIntent`s are required by the platform callback shape.
-- OTP codes sit on the clipboard and in WorkManager input data until the 60-second clear.
+- OTP codes sit on the clipboard until a best-effort WorkManager clear. The worker stores a random ownership token, not the code. Android may delay the worker or deny a background clipboard read, so the code is not guaranteed to disappear at 60 seconds.
 - Held inbound photos keep sender metadata (including location in EXIF) for the retention window.
-- User-authored regexes shorter than the cap can still be expensive; matching is not linear-time.
+- User-authored regex is RE2. Patterns that need lookaround or backreferences do not run; the filter is paused until the pattern is changed.

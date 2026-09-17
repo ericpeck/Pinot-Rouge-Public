@@ -21,5 +21,6 @@ kotlin {
 }
 
 dependencies {
+    implementation(libs.re2j)
     testImplementation(libs.junit)
 }

@@ -17,8 +17,9 @@ This document describes **what the current source actually does**. It is not a l
 | Held (Filtered) message bodies | App-private Room database `pinot_rouge.db` | This app. Cloud Auto Backup is disabled. Device-to-device transfer excludes this database and its WAL/SHM files. |
 | Held photos | App-private `held_media/` | This app. Stored **as received**, including any embedded metadata such as location. Device-to-device transfer excludes this directory. FileProvider paths do **not** include it. |
 | Filter rules and settings | Room + DataStore | This app. DataStore is excluded from device-to-device transfer. |
+| Pending compose drafts | `shared_prefs/pending_compose.xml` | This app. Device-to-device transfer excludes this file. Consumed into the compose screen and then cleared. |
 | Contacts | Read through the Contacts provider when permission is granted | Used for display names and the “never filter contacts” check. Not copied into Room. |
-| Clipboard (OTP copy) | System clipboard, marked sensitive, cleared after 60 seconds if still the same code | Other apps can still read the clipboard while the code is there, subject to Android's clipboard restrictions |
+| Clipboard (OTP copy) | System clipboard, marked sensitive. A random ownership token is stored in clip extras and WorkManager input — not the code itself. Clearing is **best-effort**: WorkManager's delay is a minimum, not an exact 60-second timer, and Android can refuse a background clipboard read. Unrelated clipboard content is never cleared. | Other apps can still read the clipboard while the code is there, subject to Android's clipboard restrictions |
 
 ## Notifications
 
@@ -32,7 +33,7 @@ Arrival notifications use MessagingStyle. They can show sender and message previ
 - Other apps' backup settings
 - Carrier copies of messages
 
-On API 31+, `allowBackup=false` does not by itself disable device-to-device transfer. `res/xml/data_extraction_rules.xml` excludes the Room database (including WAL and SHM), DataStore, and `held_media/`. Cache used for MMS send/download is not a FileProvider path for held media.
+On API 31+, `allowBackup=false` does not by itself disable device-to-device transfer. `res/xml/data_extraction_rules.xml` excludes the Room database (including WAL and SHM), DataStore, `held_media/`, `shared_prefs/pending_compose.xml` (SENDTO drafts), and the WorkManager database. MMS send/download PDUs live in the process cache; `cache` is not a supported data-extraction domain. These excludes were not verified by running an actual device-to-device migration.
 
 Uninstalling the app or clearing its data removes the private database, rules, settings, and held media. It does not remove messages already written to Android's shared store.
 
@@ -44,7 +45,7 @@ MMS send and download use Android's `SmsManager` APIs, which talk to the carrier
 
 ## Logs
 
-Compose-prefill logging does not include recipient numbers or message bodies. Avoid attaching logcat captures that contain real notifications or SMS to public issues.
+Compose-prefill logging does not include recipient numbers or message bodies. MMS retrieve logs a local operation id, not the carrier Content-Location URL. Avoid attaching logcat captures that contain real notifications or SMS to public issues.
 
 ## What “on-device” does not mean
 

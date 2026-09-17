@@ -1,5 +1,6 @@
 package com.pinotrouge.messaging.sms
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,6 +14,9 @@ import dagger.hilt.android.AndroidEntryPoint
  *
  * Until feat/ui-thread-compose lands, we parse recipient + body into prefs and
  * open MainActivity so the user is not left on a blank screen.
+ *
+ * Do not call [Uri.getQueryParameter] here: common `sms:number?body=` links
+ * are opaque and that API throws `UnsupportedOperationException`.
  */
 @AndroidEntryPoint
 class SendToActivity : ComponentActivity() {
@@ -20,11 +24,7 @@ class SendToActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val parsed = parseSendTo(intent)
         if (parsed != null) {
-            getSharedPreferences(PREFS, MODE_PRIVATE).edit()
-                .putString(KEY_RECIPIENT, parsed.recipient)
-                .putString(KEY_BODY, parsed.body)
-                .putLong(KEY_AT, System.currentTimeMillis())
-                .apply()
+            storePending(this, parsed)
             // Do not log the recipient or body — they are message content.
             Log.i(TAG, "Pending compose stored")
         }
@@ -45,16 +45,33 @@ class SendToActivity : ComponentActivity() {
 
         fun parseSendTo(intent: Intent?): SendToParser.Parsed? {
             if (intent == null) return null
-            val data: Uri = intent.data ?: return null
-            val bodyFromQuery = data.getQueryParameter("body")
-            val bodyFromExtra = intent.getStringExtra(Intent.EXTRA_TEXT)
-                ?: intent.getStringExtra("sms_body")
-            return SendToParser.parse(
-                scheme = data.scheme,
-                schemeSpecificPart = data.schemeSpecificPart,
-                queryBody = bodyFromQuery,
-                extraBody = bodyFromExtra,
-            )
+            if (!isAllowedAction(intent.action)) return null
+            return try {
+                val data: Uri = intent.data ?: return null
+                val extraBody = intent.getStringExtra(Intent.EXTRA_TEXT)
+                    ?: intent.getStringExtra("sms_body")
+                SendToParser.parse(
+                    scheme = data.scheme,
+                    schemeSpecificPart = data.schemeSpecificPart,
+                    extraBody = extraBody,
+                )
+            } catch (t: Throwable) {
+                Log.w(TAG, "SendTo parse failed: ${t.javaClass.simpleName}")
+                null
+            }
         }
+
+        fun storePending(context: Context, parsed: SendToParser.Parsed) {
+            context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
+                .putString(KEY_RECIPIENT, parsed.recipient)
+                .putString(KEY_BODY, parsed.body)
+                .putLong(KEY_AT, System.currentTimeMillis())
+                .apply()
+        }
+
+        internal fun isAllowedAction(action: String?): Boolean =
+            action == null ||
+                action == Intent.ACTION_SENDTO ||
+                action == Intent.ACTION_VIEW
     }
 }
