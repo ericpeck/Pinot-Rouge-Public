@@ -8,6 +8,7 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -23,6 +24,7 @@ import com.pinotrouge.messaging.ui.theme.PinotRougeTheme
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -99,6 +101,51 @@ class RulesListToggleInstrumentedTest {
             "Toggling a rule must never start a reorder batch",
             0,
             reorderCalls,
+        )
+    }
+
+    @Test
+    fun unreadable_enabled_rule_shows_pause_copy_and_switch_stays_off() {
+        val filterRule = FilterRule(
+            id = "r-pause",
+            name = "Legacy intersection",
+            order = 0,
+            match = MatchMode.ANY,
+            conditions = listOf(Condition.Text(TextOp.MATCHES_REGEX, "[a-z&&[^aeiou]]")),
+            actions = setOf(Action.HOLD),
+            enabled = true,
+        )
+        var toggled: Pair<FilterRule, Boolean>? = null
+        composeRule.setContent {
+            PinotRougeTheme(darkTheme = true) {
+                RulesListScreen(
+                    state = RulesListUiState(
+                        items = listOf(
+                            RuleListItem(
+                                rule = filterRule,
+                                summary = "When the text matches…",
+                                caughtLabel = "0 caught this month",
+                                lastCaughtLabel = "Never",
+                            ),
+                        ),
+                    ),
+                    onNewFilter = {},
+                    onEditFilter = {},
+                    onToggle = { r, enabled -> toggled = r to enabled },
+                )
+            }
+        }
+
+        composeRule.onNodeWithTag("rule_pause_reason").assertIsDisplayed()
+        val switchMatcher = SemanticsMatcher.expectValue(
+            SemanticsProperties.Role,
+            Role.Switch,
+        )
+        composeRule.onNode(switchMatcher).performClick()
+        composeRule.waitForIdle()
+        assertNull(
+            "Paused switch must not fire onToggle",
+            toggled,
         )
     }
 }

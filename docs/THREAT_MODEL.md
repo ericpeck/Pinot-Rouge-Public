@@ -27,8 +27,8 @@ There is no app backend to impersonate.
 - Completion receivers (`MmsDownloadReceiver`, `MmsSendReceiver`, `SmsSentReceiver`) are not exported. SMS/MMS send `PendingIntent`s are **mutable** because the platform writes result extras; they target those non-exported receivers.
 - Notification `PendingIntent`s are immutable.
 - FileProvider is not exported; paths are cache `mms_send/` and `mms_download/` only.
-- `SENDTO` accepts only `sms` / `smsto` / `mms` / `mmsto`, with recipient and body length caps. Opaque and hierarchical SMS URIs are parsed from the scheme-specific part; `Uri.getQueryParameter` is not used.
-- `MATCHES_REGEX` uses RE2 (linear-time). Unsupported syntax (lookaround, backreferences, and similar) pauses the whole rule rather than treating the condition as false. Pattern and haystack length caps remain.
+- `SENDTO` accepts only `sms` / `smsto` / `mms` / `mmsto`, with recipient and body length caps. Opaque and hierarchical SMS URIs are parsed from the **encoded** scheme-specific part (split, then decode once). `Uri.getQueryParameter` is not used.
+- `MATCHES_REGEX` uses RE2 (linear-time). Saved pattern text is never rewritten. Nested Java character-class unions are flattened at match time; `$` also matches a single trailing newline the way Java did. Intersection and other Java-only classes that cannot be converted, lookaround, and backreferences pause the whole rule rather than treating the condition as false. Pattern and haystack length caps remain.
 - Auto Backup is off; D2D extraction rules exclude quarantine storage, pending-compose prefs, and WorkManager's database. Android's shared store is a **separate** ownership domain.
 
 ## Out of scope for this app to “fix”
@@ -43,4 +43,4 @@ There is no app backend to impersonate.
 - Mutable send/download `PendingIntent`s are required by the platform callback shape.
 - OTP codes sit on the clipboard until a best-effort WorkManager clear. The worker stores a random ownership token, not the code. Android may delay the worker or deny a background clipboard read, so the code is not guaranteed to disappear at 60 seconds.
 - Held inbound photos keep sender metadata (including location in EXIF) for the retention window.
-- User-authored regex is RE2. Patterns that need lookaround or backreferences do not run; the filter is paused until the pattern is changed.
+- User-authored regex is RE2. Patterns that need lookaround, backreferences, or Java-only character-class intersection do not run; the filter is paused until the pattern is changed. Nested class unions and Java `$` before a final newline are converted at match time without rewriting the saved text.

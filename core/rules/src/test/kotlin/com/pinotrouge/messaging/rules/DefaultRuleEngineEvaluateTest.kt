@@ -247,6 +247,72 @@ class DefaultRuleEngineEvaluateTest {
     }
 
     @Test
+    fun `intersection regex pauses ANY so a second clause cannot match`() {
+        val r = rule(
+            conditions = listOf(
+                Condition.Text(TextOp.MATCHES_REGEX, "[a-z&&[^aeiou]]"),
+                Condition.Sender(SenderOp.IS_SHORT_CODE),
+            ),
+            match = MatchMode.ANY,
+        )
+        assertTrue(r.isUnreadable)
+        assertTrue(r.enabled)
+        assertFalse(r.isEffectivelyEnabled)
+        val decision = engine.evaluate(
+            msg(sender = "55555", body = "bcd"),
+            listOf(r),
+            ctx(),
+        )
+        assertEquals(FilterDecision.Allow, decision)
+    }
+
+    @Test
+    fun `nested class union still matches in ALL and ANY`() {
+        val nested = Condition.Text(TextOp.MATCHES_REGEX, "[a-d[m-p]]")
+        val allRule = rule(
+            match = MatchMode.ALL,
+            conditions = listOf(
+                nested,
+                Condition.Sender(SenderOp.IS_SHORT_CODE),
+            ),
+        )
+        assertFalse(allRule.isUnreadable)
+        assertTrue(allRule.isEffectivelyEnabled)
+        assertTrue(
+            engine.evaluate(msg(sender = "55555", body = "a"), listOf(allRule), ctx())
+                is FilterDecision.Matched,
+        )
+        assertEquals(
+            FilterDecision.Allow,
+            engine.evaluate(msg(sender = "55555", body = "e"), listOf(allRule), ctx()),
+        )
+
+        val anyRule = rule(
+            id = "any",
+            match = MatchMode.ANY,
+            conditions = listOf(
+                nested,
+                Condition.Sender(SenderOp.IS, "nobody"),
+            ),
+        )
+        assertTrue(
+            engine.evaluate(msg(sender = "55555", body = "n"), listOf(anyRule), ctx())
+                is FilterDecision.Matched,
+        )
+    }
+
+    @Test
+    fun `dollar regex matches a body that ends with a newline`() {
+        val r = rule(
+            conditions = listOf(Condition.Text(TextOp.MATCHES_REGEX, "a$")),
+        )
+        assertFalse(r.isUnreadable)
+        assertTrue(
+            engine.evaluate(msg(body = "a\n"), listOf(r), ctx()) is FilterDecision.Matched,
+        )
+    }
+
+    @Test
     fun `oversized regex pauses the rule without throwing`() {
         val oversized = "a".repeat(257)
         val r = rule(

@@ -53,6 +53,14 @@ import java.util.concurrent.atomic.AtomicReference
 /**
  * 17.4 — a held picture is visible in Filtered and on the held-message
  * screen, and Move to inbox restores the MMS so the thread tile can show it.
+ *
+ * `filteredRow_rendersHeldPhotoTile` previously crashed on Android 16 during
+ * activity disposal (`SlotWriter.moveSlotGapTo`, negative index) while
+ * [com.pinotrouge.messaging.ui.media.rememberMmsPartImage] assigned a bitmap
+ * after the composition was cancelled. The loader is async; the tile's test
+ * tag is on the Box, so the assertion can pass before decode finishes. The
+ * app now drops that assignment when the effect is cancelled, and this test
+ * waits for idle before finishing.
  */
 @RunWith(AndroidJUnit4::class)
 class HeldMediaUiInstrumentedTest {
@@ -136,8 +144,10 @@ class HeldMediaUiInstrumentedTest {
                 )
             }
         }
+        composeRule.waitForIdle()
         composeRule.onNodeWithTag(mmsTileTag(tile)).assertIsDisplayed()
         composeRule.onNodeWithText(SENDER).assertIsDisplayed()
+        composeRule.waitForIdle()
     }
 
     @Test

@@ -16,7 +16,9 @@ import dagger.hilt.android.AndroidEntryPoint
  * open MainActivity so the user is not left on a blank screen.
  *
  * Do not call [Uri.getQueryParameter] here: common `sms:number?body=` links
- * are opaque and that API throws `UnsupportedOperationException`.
+ * are opaque and that API throws `UnsupportedOperationException`. Pass
+ * [Uri.encodedSchemeSpecificPart] so the parser splits on structural
+ * delimiters before decoding once.
  */
 @AndroidEntryPoint
 class SendToActivity : ComponentActivity() {
@@ -52,7 +54,7 @@ class SendToActivity : ComponentActivity() {
                     ?: intent.getStringExtra("sms_body")
                 SendToParser.parse(
                     scheme = data.scheme,
-                    schemeSpecificPart = data.schemeSpecificPart,
+                    encodedSchemeSpecificPart = data.encodedSchemeSpecificPart,
                     extraBody = extraBody,
                 )
             } catch (t: Throwable) {

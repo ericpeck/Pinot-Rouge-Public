@@ -49,7 +49,10 @@ Published header bytes (as posted):
 84 19 b3 89 61 70 70 6c 69 63 61 74 69 6f 6e 2f 73 6d 69 6c 00
 ```
 
-Those 125 bytes match this file's prefix exactly.
+Those 125 bytes match this file's prefix exactly, except the two PLMN addresses
+which this repository replaces with documented synthetic numbers of the same
+length (`+15550003621`, `+155500030511`) so the decoder test does not keep the
+NowSMS dump's phone numbers. Header structure and remaining bytes are unchanged.
 
 Todd noted that Content-Type's value-length `0x19` (25) is longer than the posted
 remainder (`0xB3 0x89 application/smil\0` = 19 bytes). The original post was
@@ -67,8 +70,8 @@ body is built from WAP-230-WSP §8.5: `nEntries=2`, a SMIL part to skip, and a
 | field | value |
 |---|---|
 | messageType | `0x84` M-Retrieve.conf |
-| originator | `+35799536214` (`/TYPE=PLMN` stripped) |
-| participants | `+447740305115` only — from the To header, not from the body |
+| originator | `+15550003621` (`/TYPE=PLMN` stripped) |
+| participants | `+155500030511` only — from the To header, not from the body |
 | subject | `The Matrix` |
 | transactionId | `1w774QoKutEP9fzXV54nbA ` (trailing space is in the dump) |
 | body | `Follow the white rabbit.` |

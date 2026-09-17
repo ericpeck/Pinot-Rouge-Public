@@ -41,6 +41,13 @@ val Rule.isUnreadable: Boolean
         actions.any { !it.isKnown } ||
         conditions.any { it is Condition.Unsupported || it.hasUnrunnableRegex }
 
+/**
+ * What the Filters switch must show: on only if the engine would consult this
+ * rule. [enabled] can still be true while [isUnreadable] — the engine skips it.
+ */
+val Rule.isEffectivelyEnabled: Boolean
+    get() = enabled && !isUnreadable
+
 /** A MATCHES_REGEX condition this engine will not execute. */
 val Condition.hasUnrunnableRegex: Boolean
     get() = this is Condition.Text &&

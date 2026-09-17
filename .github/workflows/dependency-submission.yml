@@ -7,9 +7,11 @@ name: Dependency graph
 # never receive contents:write. Dependabot version-update PRs are not
 # vulnerability coverage; alerts against this graph are.
 #
-# Production runtime (direct + transitive) is the intended alert surface.
-# testImplementation / androidTestImplementation configurations may also
-# appear in the submitted snapshot; treat those as build/test-only.
+# The submitted snapshot includes plugin/build classpaths as well as
+# production runtime. Build-classpath pins live in
+# gradle/build-classpath-pins.gradle.kts and settings.gradle.kts.
+# Production runtime (direct + transitive) is the intended *app* alert
+# surface; testImplementation / androidTestImplementation may also appear.
 
 on:
   push:
@@ -32,6 +34,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Set up JDK 21
         uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
