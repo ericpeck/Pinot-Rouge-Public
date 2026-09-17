@@ -5,31 +5,19 @@ import com.pinotrouge.messaging.rules.EvaluationContext
 import com.pinotrouge.messaging.rules.IncomingMessage
 import com.pinotrouge.messaging.rules.AttachmentOp
 import com.pinotrouge.messaging.rules.LinkOp
+import com.pinotrouge.messaging.rules.RegexPatterns
 import com.pinotrouge.messaging.rules.SenderOp
 import com.pinotrouge.messaging.rules.TextOp
 import com.pinotrouge.messaging.rules.TimeOp
 import java.time.DayOfWeek
-import java.util.regex.Pattern
-import java.util.regex.PatternSyntaxException
 
 /**
  * Evaluates a single [Condition] against a message and context.
  *
- * A malformed or oversized regex makes its condition **false** — it must not
- * throw. This code runs inside the SMS receiver that owns incoming texts.
- *
- * Pattern length and haystack length are capped so a user-authored rule cannot
- * compile an unbounded expression against an unbounded MMS body. Java's
- * `java.util.regex` engine is still backtracking; the caps bound work, they
- * do not make matching linear-time.
+ * This code runs inside the SMS receiver. Matching must not throw and must
+ * not stall on a user-authored pattern — see [RegexPatterns].
  */
 internal object ConditionMatcher {
-
-    /** Reject `MATCHES_REGEX` patterns longer than this, in characters. */
-    const val MAX_REGEX_PATTERN_LENGTH = 256
-
-    /** Only the leading slice of a body is searched by `MATCHES_REGEX`. */
-    const val MAX_REGEX_INPUT_LENGTH = 8_192
 
     fun matches(
         condition: Condition,
@@ -80,7 +68,7 @@ internal object ConditionMatcher {
                 }
             }
         }
-        TextOp.MATCHES_REGEX -> matchRegex(condition.value, message.body)
+        TextOp.MATCHES_REGEX -> RegexPatterns.containsMatch(condition.value, message.body)
     }
 
     private fun matchLink(
@@ -119,23 +107,4 @@ internal object ConditionMatcher {
         value.split(',')
             .map { it.trim().lowercase() }
             .filter { it.isNotEmpty() }
-
-    internal fun matchRegex(pattern: String, body: String): Boolean {
-        if (pattern.length > MAX_REGEX_PATTERN_LENGTH) return false
-        val compiled = try {
-            Pattern.compile(pattern, Pattern.CASE_INSENSITIVE)
-        } catch (_: PatternSyntaxException) {
-            return false
-        }
-        val haystack = if (body.length > MAX_REGEX_INPUT_LENGTH) {
-            body.substring(0, MAX_REGEX_INPUT_LENGTH)
-        } else {
-            body
-        }
-        return try {
-            compiled.matcher(haystack).find()
-        } catch (_: StackOverflowError) {
-            false
-        }
-    }
 }

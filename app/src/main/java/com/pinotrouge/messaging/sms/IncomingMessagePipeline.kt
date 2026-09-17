@@ -300,7 +300,7 @@ class IncomingMessagePipeline @Inject constructor(
                 PlatformMmsTransport.PDU_DOWNLOAD_FLAGS,
             )
             mmsTransport.download(location, target.uri, pi, sourceIntent)
-            Log.i(TAG, "Requested MMS download for $location")
+            Log.i(TAG, MmsDownloadLog.requested(mmsId))
         } catch (t: Throwable) {
             granted?.let {
                 PlatformMmsTransport.revokePduAccess(
@@ -310,7 +310,8 @@ class IncomingMessagePipeline @Inject constructor(
                 )
             }
             targetFile?.let { runCatching { it.delete() } }
-            Log.e(TAG, "downloadMultimediaMessage failed; leaving 130 stub", t)
+            // Do not pass [t] to Log — SmsManager messages can include Content-Location.
+            Log.e(TAG, MmsDownloadLog.failed(mmsId, t.javaClass.simpleName))
             notifyDownloadFailed(mmsId)
         }
     }

@@ -12,11 +12,51 @@ class SendToParserTest {
         val parsed = SendToParser.parse(
             scheme = "sms",
             schemeSpecificPart = "+15555550100?body=Hello",
-            queryBody = "Hello",
             extraBody = null,
         )
         assertEquals("+15555550100", parsed?.recipient)
         assertEquals("Hello", parsed?.body)
+    }
+
+    @Test
+    fun `opaque ssp keeps plus on the recipient and decodes body`() {
+        val parsed = SendToParser.parse(
+            scheme = "sms",
+            schemeSpecificPart = "+15555550100?body=Hello%20there",
+        )
+        assertEquals("+15555550100", parsed?.recipient)
+        assertEquals("Hello there", parsed?.body)
+    }
+
+    @Test
+    fun `hierarchical ssp drops the authority slashes`() {
+        val parsed = SendToParser.parse(
+            scheme = "smsto",
+            schemeSpecificPart = "//5550100?body=Hi",
+        )
+        assertEquals("5550100", parsed?.recipient)
+        assertEquals("Hi", parsed?.body)
+    }
+
+    @Test
+    fun `sms_body extra fills in when the URI has no body query`() {
+        val parsed = SendToParser.parse(
+            scheme = "sms",
+            schemeSpecificPart = "5550100",
+            extraBody = "from extra",
+        )
+        assertEquals("5550100", parsed?.recipient)
+        assertEquals("from extra", parsed?.body)
+    }
+
+    @Test
+    fun `query body wins over extras`() {
+        val parsed = SendToParser.parse(
+            scheme = "mms",
+            schemeSpecificPart = "5550100?body=from-uri",
+            extraBody = "from extra",
+        )
+        assertEquals("from-uri", parsed?.body)
     }
 
     @Test
@@ -25,7 +65,6 @@ class SendToParserTest {
             SendToParser.parse(
                 scheme = "https",
                 schemeSpecificPart = "example.com",
-                queryBody = null,
                 extraBody = "hi",
             ),
         )
@@ -33,7 +72,6 @@ class SendToParserTest {
             SendToParser.parse(
                 scheme = "file",
                 schemeSpecificPart = "/tmp/x",
-                queryBody = null,
                 extraBody = "hi",
             ),
         )
@@ -46,7 +84,6 @@ class SendToParserTest {
             SendToParser.parse(
                 scheme = "smsto",
                 schemeSpecificPart = tooLong,
-                queryBody = null,
                 extraBody = "hi",
             ),
         )
@@ -58,7 +95,6 @@ class SendToParserTest {
         val parsed = SendToParser.parse(
             scheme = "sms",
             schemeSpecificPart = "5550100",
-            queryBody = null,
             extraBody = huge,
         )
         assertEquals("5550100", parsed?.recipient)
@@ -71,10 +107,19 @@ class SendToParserTest {
             SendToParser.parse(
                 scheme = "sms",
                 schemeSpecificPart = "",
-                queryBody = null,
                 extraBody = "",
             ),
         )
+    }
+
+    @Test
+    fun `malformed percent-encoding does not throw`() {
+        val parsed = SendToParser.parse(
+            scheme = "sms",
+            schemeSpecificPart = "5550100?body=%nothex",
+        )
+        assertEquals("5550100", parsed?.recipient)
+        assertEquals("%nothex", parsed?.body)
     }
 
     @Test

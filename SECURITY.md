@@ -28,3 +28,7 @@ There is no separate security mailbox published for this project. If private rep
 - SMS and MMS are **not** end-to-end encrypted. Carriers and Android's shared message store can see filed messages.
 - Holding a message in Filtered does **not** prevent every other authorized app from observing an incoming SMS. Android still offers `SMS_RECEIVED` to apps that hold that broadcast permission.
 - A clean CI run, lint run, or secret scan is **not** a certification, compliance attestation, or a claim that the project is vulnerability-free.
+
+## Dependency alerts
+
+Pushes to `main` submit the resolved Gradle dependency graph (see `.github/workflows/dependency-submission.yml`) so GitHub can alert on Android/Maven libraries, not only Actions. Pull requests from forks do not submit the graph. Dependabot version-update PRs are not vulnerability coverage.

@@ -5,10 +5,12 @@ import com.pinotrouge.messaging.rules.AttachmentOp
 import com.pinotrouge.messaging.rules.Condition
 import com.pinotrouge.messaging.rules.LinkOp
 import com.pinotrouge.messaging.rules.MatchMode
+import com.pinotrouge.messaging.rules.RegexPatterns
 import com.pinotrouge.messaging.rules.Rule
 import com.pinotrouge.messaging.rules.SenderOp
 import com.pinotrouge.messaging.rules.TextOp
 import com.pinotrouge.messaging.rules.TimeOp
+import com.pinotrouge.messaging.rules.hasUnrunnableRegex
 
 /**
  * Editable draft of a filter. Cancelling discards this copy — never mutates
@@ -36,6 +38,13 @@ data class BuilderDraft(
         get() = !match.isKnown ||
             actions.any { !it.isKnown } ||
             conditions.any { it is Condition.Unsupported }
+
+    /** Invalid regex stays editable so the pattern can be fixed; save is blocked. */
+    val hasUnrunnableRegex: Boolean
+        get() = conditions.any { it.hasUnrunnableRegex }
+
+    val canSave: Boolean
+        get() = !isReadOnly && !hasUnrunnableRegex
 
     fun toRule(id: String, order: Int, name: String): Rule = Rule(
         id = id,
@@ -310,6 +319,9 @@ const val SAVE_TOAST_SUFFIX = " is on. It starts with the next message."
 /** Shown above a read-only builder when a condition cannot be parsed. */
 const val UNSUPPORTED_RULE_REASON =
     "This filter was written in a newer version of Pinot Rouge. It is paused until you update, and nothing in it has been changed."
+
+/** Shown when MATCHES_REGEX cannot run on this engine. Same words as [RegexPatterns.UNRUNNABLE_REASON]. */
+const val REGEX_UNRUNNABLE_REASON = RegexPatterns.UNRUNNABLE_REASON
 
 fun saveToastMessage(name: String): String =
     "\u201C$name\u201D$SAVE_TOAST_SUFFIX"

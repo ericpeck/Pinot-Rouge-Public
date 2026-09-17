@@ -8,22 +8,18 @@ import android.os.PersistableBundle
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.workDataOf
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * OTP / verification-code clipboard: mark sensitive, schedule a 60s clear.
+ * OTP / verification-code clipboard: mark sensitive, schedule a best-effort clear.
  *
- * Clear is a [WorkManager] one-shot ([OtpClipboardClearWorker]) so it survives
- * process death. The worker wipes the clipboard **only** when the primary clip
- * still equals the code we set (see [OtpClipboardPolicy]).
- *
- * Unique work name is replaced on each copy so only the latest code's timer
- * remains — copying a second code cancels the first clear job, which is correct
- * because the first code is no longer on the clipboard.
+ * WorkManager input stores only a random ownership token, never the code.
+ * Clear runs after [CLEAR_AFTER_SECONDS] **at the earliest**; Android may delay
+ * or skip the worker, and a background process may be unable to read the
+ * clipboard. We wipe only when the clip still carries our token.
  */
 @Singleton
 class OtpClipboard @Inject constructor(
@@ -31,25 +27,22 @@ class OtpClipboard @Inject constructor(
 ) {
 
     /**
-     * Copy [code] as sensitive plain text and schedule clear after [CLEAR_AFTER_SECONDS].
+     * Copy [code] as sensitive plain text and schedule a best-effort clear.
      */
     fun copyCode(code: String) {
         if (code.isEmpty()) return
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
             ?: return
 
-        val clip = ClipData.newPlainText(CLIP_LABEL, code)
-        clip.description.extras = PersistableBundle().apply {
-            putBoolean(ClipDescription.EXTRA_IS_SENSITIVE, true)
-        }
-        clipboard.setPrimaryClip(clip)
-        scheduleClear(code)
+        val token = OtpClipboardPolicy.newOwnershipToken()
+        clipboard.setPrimaryClip(clipFor(code, token))
+        scheduleClear(token)
     }
 
-    private fun scheduleClear(code: String) {
+    private fun scheduleClear(token: String) {
         val request = OneTimeWorkRequestBuilder<OtpClipboardClearWorker>()
             .setInitialDelay(CLEAR_AFTER_SECONDS, TimeUnit.SECONDS)
-            .setInputData(workDataOf(OtpClipboardClearWorker.KEY_CODE to code))
+            .setInputData(OtpClipboardPolicy.workInput(token))
             .addTag(OtpClipboardClearWorker.TAG)
             .build()
         WorkManager.getInstance(context).enqueueUniqueWork(
@@ -62,5 +55,14 @@ class OtpClipboard @Inject constructor(
     companion object {
         const val CLEAR_AFTER_SECONDS = 60L
         const val CLIP_LABEL = "verification code"
+
+        fun clipFor(code: String, token: String): ClipData {
+            val clip = ClipData.newPlainText(CLIP_LABEL, code)
+            clip.description.extras = PersistableBundle().apply {
+                putBoolean(ClipDescription.EXTRA_IS_SENSITIVE, true)
+                putString(OtpClipboardPolicy.EXTRA_OWNERSHIP, token)
+            }
+            return clip
+        }
     }
 }

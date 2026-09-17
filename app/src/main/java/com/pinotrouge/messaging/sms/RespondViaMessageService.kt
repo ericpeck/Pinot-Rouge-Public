@@ -26,7 +26,6 @@ class RespondViaMessageService : Service() {
         val parsed = SendToParser.parse(
             scheme = intent?.data?.scheme,
             schemeSpecificPart = intent?.data?.schemeSpecificPart,
-            queryBody = null,
             extraBody = intent?.getStringExtra(Intent.EXTRA_TEXT),
         )
         val recipient = parsed?.recipient.orEmpty()

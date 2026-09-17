@@ -299,6 +299,20 @@ class BuilderDraftTest {
     }
 
     @Test
+    fun `invalid regex stays editable but cannot save`() {
+        val draft = BuilderDraft.newRule()
+            .setField(0, ConditionField.Text)
+            .setOperator(0, TextOp.MATCHES_REGEX.name)
+            .setValue(0, "(?=lookaround)")
+        assertFalse(draft.isReadOnly)
+        assertTrue(draft.hasUnrunnableRegex)
+        assertFalse(draft.canSave)
+        assertEquals(REGEX_UNRUNNABLE_REASON, com.pinotrouge.messaging.rules.RegexPatterns.UNRUNNABLE_REASON)
+        val fixed = draft.setValue(0, "pre-approved")
+        assertTrue(fixed.canSave)
+    }
+
+    @Test
     fun `save toast uses curly quotes`() {
         assertEquals(
             "\u201CLoan and crypto offers\u201D is on. It starts with the next message.",

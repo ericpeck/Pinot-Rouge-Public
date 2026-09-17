@@ -110,9 +110,9 @@ enum class TextOp(val label: String, val needsValue: Boolean) {
     DOES_NOT_CONTAIN("does not contain", needsValue = true),
 
     /**
-     * Value is a user-authored regular expression. It is untrusted input: a
-     * pattern that fails to compile must make the condition simply not match.
-     * Never let it escape as an exception — this runs inside an SMS receiver.
+     * Value is a user-authored regular expression, matched with RE2 (linear
+     * time). Unsupported syntax makes the **rule** [Rule.isUnreadable] rather
+     * than treating the condition as false (which would under-filter).
      */
     MATCHES_REGEX("matches the pattern", needsValue = true),
 }
