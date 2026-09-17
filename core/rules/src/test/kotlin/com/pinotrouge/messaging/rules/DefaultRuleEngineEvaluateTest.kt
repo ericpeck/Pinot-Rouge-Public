@@ -1,6 +1,7 @@
 package com.pinotrouge.messaging.rules
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -215,26 +216,63 @@ class DefaultRuleEngineEvaluateTest {
     }
 
     @Test
-    fun `malformed regex makes condition false without throwing`() {
+    fun `malformed regex pauses the rule instead of treating the condition as false`() {
         val r = rule(
             conditions = listOf(
                 Condition.Text(TextOp.MATCHES_REGEX, "[unterminated"),
             ),
         )
+        assertTrue(r.isUnreadable)
         val decision = engine.evaluate(msg(body = "anything"), listOf(r), ctx())
         assertEquals(FilterDecision.Allow, decision)
     }
 
     @Test
-    fun `oversized regex makes condition false without throwing`() {
+    fun `lookaround regex pauses the rule so it cannot under-filter`() {
+        val r = rule(
+            conditions = listOf(
+                Condition.Text(TextOp.MATCHES_REGEX, "(?=pre-approved).+"),
+                Condition.Sender(SenderOp.IS_SHORT_CODE),
+            ),
+            match = MatchMode.ANY,
+        )
+        assertTrue(r.isUnreadable)
+        // ANY would otherwise still match the short-code clause.
+        val decision = engine.evaluate(
+            msg(sender = "55555", body = "pre-approved"),
+            listOf(r),
+            ctx(),
+        )
+        assertEquals(FilterDecision.Allow, decision)
+    }
+
+    @Test
+    fun `oversized regex pauses the rule without throwing`() {
         val oversized = "a".repeat(257)
         val r = rule(
             conditions = listOf(
                 Condition.Text(TextOp.MATCHES_REGEX, oversized),
             ),
         )
+        assertTrue(r.isUnreadable)
         val decision = engine.evaluate(msg(body = "a".repeat(300)), listOf(r), ctx())
         assertEquals(FilterDecision.Allow, decision)
+    }
+
+    @Test
+    fun `nested-quantifier pattern finishes quickly and does not match`() {
+        val r = rule(
+            conditions = listOf(
+                Condition.Text(TextOp.MATCHES_REGEX, "(a+)+b"),
+            ),
+        )
+        assertFalse(r.isUnreadable)
+        val body = "a".repeat(100)
+        val started = System.nanoTime()
+        val decision = engine.evaluate(msg(body = body), listOf(r), ctx())
+        val elapsedMs = (System.nanoTime() - started) / 1_000_000L
+        assertEquals(FilterDecision.Allow, decision)
+        assertTrue("nested quantifiers took ${elapsedMs}ms", elapsedMs < 250L)
     }
 
     @Test

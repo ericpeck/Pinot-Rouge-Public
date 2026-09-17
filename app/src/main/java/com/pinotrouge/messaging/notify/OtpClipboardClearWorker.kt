@@ -10,12 +10,12 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
 /**
- * Clears the primary clipboard 60s after an OTP copy — only if the clip still
- * matches the code we put there.
+ * Best-effort clipboard clear after an OTP copy.
  *
- * Background clipboard reads can return null on some Android versions when the
- * app process has no focus. In that case we **do not** wipe (would risk
- * destroying a later user copy we cannot compare). See Log.
+ * WorkManager's initial delay is a minimum, not a wall-clock guarantee.
+ * Background clipboard reads can return null when the process has no focus;
+ * in that case we do not wipe, because we cannot tell whether the clip is
+ * still ours.
  */
 @HiltWorker
 class OtpClipboardClearWorker @AssistedInject constructor(
@@ -24,9 +24,9 @@ class OtpClipboardClearWorker @AssistedInject constructor(
 ) : CoroutineWorker(appContext, params) {
 
     override suspend fun doWork(): Result {
-        val expected = inputData.getString(KEY_CODE).orEmpty()
-        if (expected.isEmpty()) {
-            Log.w(TAG, "No code in input; nothing to clear")
+        val expectedToken = inputData.getString(KEY_TOKEN).orEmpty()
+        if (expectedToken.isEmpty()) {
+            Log.w(TAG, "No ownership token in input; nothing to clear")
             return Result.success()
         }
 
@@ -36,34 +36,32 @@ class OtpClipboardClearWorker @AssistedInject constructor(
             return Result.success()
         }
 
-        val current = readPrimaryText(clipboard)
-        if (!OtpClipboardPolicy.shouldClear(current, expected)) {
+        val currentToken = readOwnershipToken(clipboard)
+        if (!OtpClipboardPolicy.shouldClear(currentToken, expectedToken)) {
             Log.d(
                 TAG,
-                "Skip clear: clip does not match expected OTP " +
-                    "(readable=${current != null})",
+                "Skip clear: clip is not ours or unreadable (readable=${currentToken != null})",
             )
             return Result.success()
         }
 
         return try {
             clipboard.clearPrimaryClip()
-            Log.i(TAG, "OTP cleared from clipboard")
+            Log.i(TAG, "OTP clipboard cleared")
             Result.success()
         } catch (t: Throwable) {
-            Log.e(TAG, "clearPrimaryClip failed", t)
+            Log.e(TAG, "clearPrimaryClip failed: ${t.javaClass.simpleName}")
             Result.success()
         }
     }
 
-    private fun readPrimaryText(clipboard: ClipboardManager): String? {
+    private fun readOwnershipToken(clipboard: ClipboardManager): String? {
         return try {
             if (!clipboard.hasPrimaryClip()) return null
             val clip = clipboard.primaryClip ?: return null
-            if (clip.itemCount < 1) return null
-            clip.getItemAt(0).coerceToText(appContext)?.toString()
+            clip.description.extras?.getString(OtpClipboardPolicy.EXTRA_OWNERSHIP)
         } catch (t: Throwable) {
-            Log.w(TAG, "Could not read clipboard for compare", t)
+            Log.w(TAG, "Could not read clipboard extras: ${t.javaClass.simpleName}")
             null
         }
     }
@@ -71,6 +69,6 @@ class OtpClipboardClearWorker @AssistedInject constructor(
     companion object {
         const val TAG = "OtpClipboardClear"
         const val UNIQUE_WORK_NAME = "otp_clipboard_clear"
-        const val KEY_CODE = "code"
+        const val KEY_TOKEN = "ownership_token"
     }
 }

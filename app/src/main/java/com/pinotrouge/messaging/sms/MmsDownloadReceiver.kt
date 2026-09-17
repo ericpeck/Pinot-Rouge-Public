@@ -102,7 +102,7 @@ class MmsDownloadReceiver : BroadcastReceiver() {
                 pipeline.handleMms(message)
                 pipeline.sendNotifyResp(message.transactionId, sourceCopy)
             } catch (t: Throwable) {
-                Log.e(TAG, "MmsDownloadReceiver failed; leaving stub", t)
+                Log.e(TAG, "MmsDownloadReceiver failed; leaving stub error=${t.javaClass.simpleName}")
                 runCatching {
                     entry?.incomingMessagePipeline()?.notifyDownloadFailed(mmsId)
                 }

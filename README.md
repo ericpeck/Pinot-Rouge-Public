@@ -114,7 +114,7 @@ Private quarantine controls where Pinot Rouge stores messages. It does **not** g
 - Compose and send text or one staged camera/gallery photo, with compression to fit the MMS size limit
 - Received-photo grids and a full-screen photo view
 - Picture auto-download controls; on by default, with downloading while roaming off
-- Notifications with MessagingStyle; one-tap copy for OTP codes, then a timed clipboard clear
+- Notifications with MessagingStyle; one-tap copy for OTP codes, then a best-effort clipboard clear
 - Preview mode if you decline the SMS role: edit filters and browse history where read permission is granted; sending and arrival filtering require the role
 - Nine accent themes (Cabernet, Rosé, Concord, …) plus an in-app dark theme
 

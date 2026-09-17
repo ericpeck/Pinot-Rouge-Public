@@ -8,13 +8,30 @@
   re-enable cloud backup. If allowBackup is ever set true, add a matching
   <cloud-backup> block with these same excludes, plus fullBackupContent for
   API ≤ 30. WAL and SHM are not optional: Room runs in WAL mode.
+
+  Inventory of message-bearing app-private storage (not a device-migration test):
+  - database pinot_rouge.db (+ WAL/SHM): held bodies
+  - file datastore/: settings
+  - file held_media/: held photos as received
+  - sharedpref pending_compose.xml: SENDTO draft recipient + body
+  - database androidx.work.workdb (+ WAL/SHM): WorkManager input (ownership
+    tokens today; must not grow message content)
+  - cache mms_send/ and mms_download/: PDU bytes. `cache` is not a
+    data-extraction domain (lint FullBackupContent); these files are in
+    the process cache and are not listed here.
+  Android's shared SMS/MMS provider is a separate ownership domain and cannot
+  be excluded from here.
 -->
 <data-extraction-rules>
     <device-transfer>
         <exclude domain="database" path="pinot_rouge.db" />
         <exclude domain="database" path="pinot_rouge.db-wal" />
         <exclude domain="database" path="pinot_rouge.db-shm" />
+        <exclude domain="database" path="androidx.work.workdb" />
+        <exclude domain="database" path="androidx.work.workdb-wal" />
+        <exclude domain="database" path="androidx.work.workdb-shm" />
         <exclude domain="file" path="datastore/" />
         <exclude domain="file" path="held_media/" />
+        <exclude domain="sharedpref" path="pending_compose.xml" />
     </device-transfer>
 </data-extraction-rules>

@@ -150,7 +150,7 @@ fun BuilderScreen(
                     text = stringResource(R.string.builder_save),
                     onClick = onSave,
                     variant = PinotButtonVariant.Primary,
-                    enabled = !state.saving && !draft.isReadOnly,
+                    enabled = !state.saving && draft.canSave,
                     modifier = Modifier.testTag("builder_save"),
                 )
             }
@@ -187,6 +187,15 @@ fun BuilderScreen(
                         modifier = Modifier
                             .padding(bottom = 16.dp)
                             .testTag("builder_unsupported_reason"),
+                    )
+                } else if (draft.hasUnrunnableRegex) {
+                    Text(
+                        text = REGEX_UNRUNNABLE_REASON,
+                        style = PinotTypography.bodySmall.copy(fontSize = 12.5.sp),
+                        color = colors.dim,
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                            .testTag("builder_regex_unrunnable_reason"),
                     )
                 }
 
